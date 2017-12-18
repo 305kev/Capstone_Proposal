@@ -1,5 +1,5 @@
 
-# Galvanize Capstone Proposal
+# A.I. Legal Research Assistant
 
 ### Kevin Magana, December 17th, 2017 
 
