@@ -47,7 +47,6 @@ def run_scraper(current_url, dft):
         for i in soup.find_all(name="a", attrs={"class": "pgnum"}):
             next_list.append(i.text)
         flag = next_list[-1]
-        break
     dft = dft.append(pd.DataFrame(cases), ignore_index=True)
     return dft
 
