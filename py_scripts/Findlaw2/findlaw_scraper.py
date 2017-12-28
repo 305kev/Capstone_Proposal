@@ -1,3 +1,5 @@
+from imp import reload
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -12,6 +14,9 @@ try:
 except ImportError:
     from urllib.parse import urljoin
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
 def run_scraper(current_url, dft):
@@ -222,9 +227,13 @@ def write_file_to_s3(df_write):
     :param df_write: DataFrame to write to file
     :return: None
     """
+    for column in df:
+        df_write[column] = df_write[column].str.encode('utf-8')
+
     try:
         csv_buffer = StringIO()
         df_write.to_csv(csv_buffer, index=False)
+
     except:
         csv_buffer = BytesIO()
         df_write.to_csv(csv_buffer, index=False)
@@ -260,6 +269,6 @@ if __name__ == "__main__":
     first_url = 'http://caselaw.findlaw.com/summary/search/?query=filters&court=us-1st-circuit&dateFormat=yyyyMMdd&topic=cs_42&pgnum=1'
     df= run_scraper(first_url, df)
     write_file_to_s3(df)
-    print(df.head())
+    print(df.tail())
 
     
