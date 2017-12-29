@@ -270,7 +270,7 @@ if __name__ == "__main__":
     Call: python findlaw_scraper.py 
     
     """
-    courts = print('U.S. Circuit Courts: 1st, 2nd, 3rd, 4th, 5th, 6th, 7th, 8th, 9th, 10th, 11th')
+    print('U.S. Circuit Courts: 1st, 2nd, 3rd, 4th, 5th, 6th, 7th, 8th, 9th, 10th, 11th')
     court= input('Which court would you like to scrape? (e.g. 1st, 2nd, 3rd, etc.)' )
 
     df = access_s3_to_df(court)
