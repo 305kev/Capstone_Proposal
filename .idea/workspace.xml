@@ -18,8 +18,8 @@
           <file leaf-file-name="findlaw_scraper.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="305">
-                  <caret line="275" column="19" lean-forward="false" selection-start-line="275" selection-start-column="19" selection-end-line="275" selection-end-column="19" />
+                <state relative-caret-position="385">
+                  <caret line="278" column="31" lean-forward="true" selection-start-line="278" selection-start-column="31" selection-end-line="278" selection-end-column="31" />
                   <folding>
                     <element signature="e#0#22#0" expanded="true" />
                   </folding>
@@ -291,8 +291,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="275" column="19" lean-forward="false" selection-start-line="275" selection-start-column="19" selection-end-line="275" selection-end-column="19" />
+        <state relative-caret-position="385">
+          <caret line="278" column="31" lean-forward="true" selection-start-line="278" selection-start-column="31" selection-end-line="278" selection-end-column="31" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
