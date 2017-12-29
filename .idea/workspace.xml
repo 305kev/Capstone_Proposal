@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f951bde7-d042-4b7e-be03-161a8cf816cb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/py_scripts/Findlaw2/supreme_court.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/Clean_test_web_scraper.ipynb" afterPath="$PROJECT_DIR$/notebooks/Clean_test_web_scraper.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py" afterPath="$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,11 +15,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="findlaw_scraper.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="findlaw_scraper.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
+                <state relative-caret-position="593">
+                  <caret line="46" column="24" lean-forward="true" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
                   <folding>
                     <element signature="e#0#22#0" expanded="true" />
                   </folding>
@@ -29,10 +27,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="supreme_court.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="supreme_court.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/supreme_court.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4245">
+                <state relative-caret-position="3395">
                   <caret line="283" column="0" lean-forward="true" selection-start-line="283" selection-start-column="0" selection-end-line="283" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#22#0" expanded="true" />
@@ -77,8 +75,8 @@
         <option value="$PROJECT_DIR$/py_scripts/findlaw/findlaw/spiders/legal.py" />
         <option value="$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper_real.py" />
         <option value="$PROJECT_DIR$/py_scripts/Findlaw2/example_scraper.py" />
-        <option value="$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py" />
         <option value="$PROJECT_DIR$/py_scripts/Findlaw2/supreme_court.py" />
+        <option value="$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py" />
       </list>
     </option>
   </component>
@@ -294,16 +292,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper_real.py" />
-    <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/example_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="354">
@@ -316,8 +304,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/supreme_court.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4245">
+        <state relative-caret-position="3395">
           <caret line="283" column="0" lean-forward="true" selection-start-line="283" selection-start-column="0" selection-end-line="283" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="593">
+          <caret line="46" column="24" lean-forward="true" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>

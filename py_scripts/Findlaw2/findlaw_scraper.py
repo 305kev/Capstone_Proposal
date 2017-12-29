@@ -40,8 +40,11 @@ def run_scraper(current_url, dft):
         # 1.) Get each court case listing
 
         for row in soup.find_all(name="tr", attrs={"class": "srpcaselawtr"}):
-            cases = add_case_info(row, cases)
-            sleep(2)
+            try:
+                cases = add_case_info(row, cases)
+                sleep(2)
+            except:
+                continue
 
         # 2.) Get next page's pagination info + set new flag
         try:
