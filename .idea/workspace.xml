@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f951bde7-d042-4b7e-be03-161a8cf816cb" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/Clean_test_web_scraper.ipynb" afterPath="$PROJECT_DIR$/notebooks/Clean_test_web_scraper.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py" afterPath="$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +19,8 @@
           <file leaf-file-name="findlaw_scraper.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="410">
-                  <caret line="51" column="0" lean-forward="true" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+                <state relative-caret-position="384">
+                  <caret line="281" column="4" lean-forward="true" selection-start-line="281" selection-start-column="4" selection-end-line="281" selection-end-column="4" />
                   <folding>
                     <element signature="e#0#22#0" expanded="true" />
                   </folding>
@@ -34,7 +35,7 @@
           <file leaf-file-name="example_scraper.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/example_scraper.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1589">
+                <state relative-caret-position="354">
                   <caret line="201" column="20" lean-forward="false" selection-start-line="201" selection-start-column="20" selection-end-line="201" selection-end-column="20" />
                   <folding>
                     <element signature="e#0#15#0" expanded="true" />
@@ -281,7 +282,7 @@
     <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper_real.py" />
     <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/example_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1589">
+        <state relative-caret-position="354">
           <caret line="201" column="20" lean-forward="false" selection-start-line="201" selection-start-column="20" selection-end-line="201" selection-end-column="20" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
@@ -291,8 +292,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="51" column="0" lean-forward="true" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        <state relative-caret-position="384">
+          <caret line="281" column="4" lean-forward="true" selection-start-line="281" selection-start-column="4" selection-end-line="281" selection-end-column="4" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>

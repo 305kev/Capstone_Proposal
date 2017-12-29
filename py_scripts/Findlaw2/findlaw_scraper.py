@@ -13,10 +13,11 @@ try:
     from urlparse import urljoin
 except ImportError:
     from urllib.parse import urljoin
-
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+
+
 
 
 def run_scraper(current_url, dft):
@@ -27,29 +28,38 @@ def run_scraper(current_url, dft):
     :return: dft: Pandas dataframe containing scraped information
     """
 
-    flag = u'\xbb'
+
     soup = create_soup(current_url)
     cases = defaultdict(list)
 
     # Run the scraper until it runs out of pages to scrape
+    flag = u'\xbb'
+    last_page = False
 
-    while u'\xbb' in flag:
+    while u'\xbb' in flag or last_page==False:
         # 1.) Get each court case listing
 
         for row in soup.find_all(name="tr", attrs={"class": "srpcaselawtr"}):
             cases = add_case_info(row, cases)
             sleep(2)
 
-        ## 2.) Get next page's pagination info + set new flag
-        current_url = get_next_url(current_url, soup)
-        soup = create_soup(current_url)
-        next_list = []
-        for i in soup.find_all(name="a", attrs={"class": "pgnum"}):
-            next_list.append(i.text)
+        # 2.) Get next page's pagination info + set new flag
+        try:
+            current_url = get_next_url(current_url, soup)
+            soup = create_soup(current_url)
+            next_list = []
+            for i in soup.find_all(name="a", attrs={"class": "pgnum"}):
+                next_list.append(i.text)
+        except:
+            break
+
         flag = next_list[-1]
+        if u'\xbb' not in flag and last_page == False:
+            flag = u'\xbb'
+            last_page = True
+
     dft = dft.append(pd.DataFrame(cases), ignore_index=True)
     return dft
-
 
 def create_soup(url):
     """
@@ -60,7 +70,6 @@ def create_soup(url):
     page = requests.get(url)
     return BeautifulSoup(page.text, "html.parser")
 
-
 def get_next_url(current_url, soup):
     """
     Get the URL of the next listings page.
@@ -70,7 +79,6 @@ def get_next_url(current_url, soup):
 
     d = [i.get('href') for i in soup.find_all(name="a", attrs={"class": "pgnum"})][-1]
     return urljoin(current_url, d)
-
 
 def add_case_info(row, case_dict):
     """
@@ -95,7 +103,6 @@ def add_case_info(row, case_dict):
 
     return case_dict
 
-
 def get_case_title(row):
     """
     extract the title from the row tag
@@ -104,7 +111,6 @@ def get_case_title(row):
     """
     title = row.find('a').get("title")
     return title
-
 
 def get_court(row):
     """
@@ -115,7 +121,6 @@ def get_court(row):
     court = row.find('span').text
     return court
 
-
 def get_tags(row):
     """
     extract the types of law involved as law tags from the row tag
@@ -125,7 +130,6 @@ def get_tags(row):
     tags = row.find('i').text
     return tags
 
-
 def get_date(row):
     """
     extract decision date from the row tag
@@ -134,7 +138,6 @@ def get_date(row):
     """
     decision_date = row.find_all('td', {'valign': 'top'})[-2].text
     return decision_date
-
 
 def get_docket(row):
     """
@@ -208,7 +211,6 @@ def get_case_text(link):
                     case.append(chunk)
     return '\n'.join(case)
 
-
 def create_df_new():
     """
     If it doesn't exist, create the initial case_data file
@@ -219,8 +221,7 @@ def create_df_new():
                                    "web_source", "url", "case_text"])
     return df_new
 
-
-def write_file_to_s3(df_write):
+def write_file_to_s3(df_write, court):
     """
     Save the updated dataframe to a file on the project's AWS S3 bucket.
     :param df_write: DataFrame to write to file
@@ -239,10 +240,9 @@ def write_file_to_s3(df_write):
 
     s3 = boto3.resource("s3", aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
                         aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"])
-    s3.Object("court-case-data", "court_cases_data_test.csv").put(Body=csv_buffer.getvalue())
+    s3.Object("court-case-data", "{}.csv".format(court)).put(Body=csv_buffer.getvalue())
 
-
-def access_s3_to_df():
+def access_s3_to_df(court):
     """
     Access the project's S3 bucket and load the file into a dataframe for appending.
     :return: df: a pandas dataframe containing the data.
@@ -251,12 +251,18 @@ def access_s3_to_df():
     s3 = boto3.client("s3", aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
                       aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"])
     try:
-        obj = s3.get_object(Bucket="court-case-data", Key="court_cases_data_test.csv")
+        obj = s3.get_object(Bucket="court-case-data", Key="{}.csv".format(court))
         return pd.read_csv(BytesIO(obj["Body"].read()))
     except:
         return create_df_new()
 
-
+def which_court_url(court):
+    """
+    :param court: command line argument,
+    :return: URL for first page of search
+    """
+    first_url = 'http://caselaw.findlaw.com/summary/search/?query=filters&court=us-{}-circuit&dateFormat=yyyyMMdd&topic=cs_42&pgnum=1'.format(court)
+    return first_url
 
 if __name__ == "__main__":
     """
@@ -264,10 +270,13 @@ if __name__ == "__main__":
     Call: python findlaw_scraper.py 
     
     """
-    df = access_s3_to_df()
-    first_url = 'http://caselaw.findlaw.com/summary/search/?query=filters&court=us-1st-circuit&dateFormat=yyyyMMdd&topic=cs_42&pgnum=1'
+    courts = print('U.S. Circuit Courts: ', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th')
+    court= input('which court would you like to scrape? (e.g. 1st, 2nd, 3rd, etc.)' )
+
+    df = access_s3_to_df(court)
+    first_url = which_court_url(court)
     df= run_scraper(first_url, df)
-    write_file_to_s3(df)
+    write_file_to_s3(df, court)
     print(df.tail())
 
     
