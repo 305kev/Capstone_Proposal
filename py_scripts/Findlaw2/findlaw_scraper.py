@@ -27,8 +27,6 @@ def run_scraper(current_url, dft):
     :param dft: Pandas dataframe, the listings data from previous scrapings
     :return: dft: Pandas dataframe containing scraped information
     """
-
-
     soup = create_soup(current_url)
     cases = defaultdict(list)
 
@@ -38,14 +36,9 @@ def run_scraper(current_url, dft):
 
     while u'\xbb' in flag or last_page==False:
         # 1.) Get each court case listing
-
         for row in soup.find_all(name="tr", attrs={"class": "srpcaselawtr"}):
-            try:
-                cases = add_case_info(row, cases)
-                sleep(2)
-            except:
-                continue
-
+            cases = add_case_info(row, cases)
+            sleep(2)
         # 2.) Get next page's pagination info + set new flag
         try:
             current_url = get_next_url(current_url, soup)
@@ -187,32 +180,34 @@ def get_case_text(link):
     :return: if case text as html: str, the case text from the webpage
             else: nothing.
     """
-    text_soup = create_soup(link)
+    try:
+        text_soup = create_soup(link)
+        # remove all javascript and stylesheet code
+        for script in text_soup(["script", "style"]):
+            script.extract()
 
-    # remove all javascript and stylesheet code
-    for script in text_soup(["script", "style"]):
-        script.extract()
+        text = text_soup.get_text()
 
-    text = text_soup.get_text()
+        # break into lines and remove leading and trailing space on each
+        lines = (line.strip() for line in text.splitlines())
 
-    # break into lines and remove leading and trailing space on each
-    lines = (line.strip() for line in text.splitlines())
+        # break multi-headlines into a line each
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
 
-    # break multi-headlines into a line each
-    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        # drop any blank lines and get only relevant text
+        case = []
 
-    # drop any blank lines and get only relevant text
-    case = []
-
-    for chunk in chunks:
-        if chunk and 'United States Court of Appeals' in chunk:
-            case.append(chunk)
-            for chunk in chunks:
-                if 'FindLaw Career Center' in chunk:
-                    break
-                else:
-                    case.append(chunk)
-    return '\n'.join(case)
+        for chunk in chunks:
+            if chunk and 'United States Court of Appeals' in chunk:
+                case.append(chunk)
+                for chunk in chunks:
+                    if 'FindLaw Career Center' in chunk:
+                        break
+                    else:
+                        case.append(chunk)
+        return '\n'.join(case)
+    except:
+        return None
 
 def create_df_new():
     """
