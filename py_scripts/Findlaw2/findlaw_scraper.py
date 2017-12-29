@@ -271,7 +271,11 @@ if __name__ == "__main__":
     
     """
     print('U.S. Circuit Courts: 1st, 2nd, 3rd, 4th, 5th, 6th, 7th, 8th, 9th, 10th, 11th')
-    court= str(input('Which court would you like to scrape? (e.g. 1st, 2nd, 3rd, etc.): ' ))
+
+    try:
+        court= input('Which court would you like to scrape? (e.g. 1st, 2nd, 3rd, etc.): ')
+    except SyntaxError:
+        court = raw_input('Which court would you like to scrape? (e.g. 1st, 2nd, 3rd, etc.): ')
 
     df = access_s3_to_df(court)
     first_url = which_court_url(court)

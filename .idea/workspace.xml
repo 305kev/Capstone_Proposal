@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f951bde7-d042-4b7e-be03-161a8cf816cb" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/Clean_test_web_scraper.ipynb" afterPath="$PROJECT_DIR$/notebooks/Clean_test_web_scraper.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py" afterPath="$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +19,8 @@
           <file leaf-file-name="findlaw_scraper.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="385">
-                  <caret line="278" column="31" lean-forward="true" selection-start-line="278" selection-start-column="31" selection-end-line="278" selection-end-column="31" />
+                <state relative-caret-position="296">
+                  <caret line="278" column="0" lean-forward="true" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#22#0" expanded="true" />
                   </folding>
@@ -291,8 +292,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/py_scripts/Findlaw2/findlaw_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="278" column="31" lean-forward="true" selection-start-line="278" selection-start-column="31" selection-end-line="278" selection-end-column="31" />
+        <state relative-caret-position="296">
+          <caret line="278" column="0" lean-forward="true" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
