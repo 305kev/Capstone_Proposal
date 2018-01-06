@@ -32,7 +32,7 @@ def results(search_query, ready=False):
         case_date = DATAFRAME.date[0]
         case_tags= DATAFRAME.tags[0]
 
-        return case_title, case_date, case_text
+        return [{'case_title': case_title}, {'case_date': case_date}, {'case_text': case_text}]
 
 
 if __name__ == "__main__":
