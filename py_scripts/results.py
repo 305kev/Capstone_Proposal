@@ -1,5 +1,5 @@
 """
-The online prediction engine
+The online legal research engine
 """
 
 from sklearn.ensemble import RandomForestClassifier
