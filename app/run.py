@@ -1,3 +1,6 @@
+# RM NOTE: to run, run the following command from the ./app directory
+# export FLASK_APP=run.py && python -m flask run
+
 from flask import Flask, url_for, render_template, request, jsonify
 app = Flask(__name__)
 
