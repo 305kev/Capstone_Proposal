@@ -26,7 +26,6 @@ import pandas as pd
 
 def find_format(url):
 #     soup = create_soup(url)
-    sleep(.1)
     try:
         content = requests.get(url).content
         soup = BeautifulSoup(content, "html.parser")
