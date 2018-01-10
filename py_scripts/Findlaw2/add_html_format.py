@@ -26,7 +26,7 @@ import pandas as pd
 
 def find_format(url):
 #     soup = create_soup(url)
-    sleep(1)
+    sleep(.1)
     try:
         content = requests.get(url).content
         soup = BeautifulSoup(content, "html.parser")
@@ -48,7 +48,7 @@ def access_s3_to_df():
         obj = s3.get_object(Bucket="court-case-data", Key="merged_data_with_html_format.csv")
         return pd.read_csv(BytesIO(obj["Body"].read()))
     except:
-        return create_df_new()
+        return None
 
 def write_file_to_s3(df_write):
     """
