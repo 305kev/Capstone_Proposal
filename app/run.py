@@ -3,6 +3,7 @@
 
 from flask import Flask, url_for, render_template, request, jsonify
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route('/')
 def root():
