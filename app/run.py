@@ -11,5 +11,5 @@ def root():
 
 @app.route("/get_results", methods=["POST"])
 def get_results():
-	print request.form
+	print (request.form)
 	return "ok"
