@@ -6,7 +6,6 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import sys
 sys.path.append('/Users/kevingmagana/DSI/capstone/capstone/py_scripts')
-from data_processing import DataProcessing
 import json
 import query_parser
 import _pickle as cPickle
@@ -236,8 +235,8 @@ def load_data(local= True):
 
 
         df2 = df.iloc[:, [2, 12]]
-        df2 = df.drop_duplicates(subset='title_date')
-        df2 = df.reset_index(drop=True)
+        df2 = df2.drop_duplicates(subset='title_date')
+        df2 = df2.reset_index(drop=True)
     else:
         # -- LOAD FROM Amazon Web Services --
         s3 = boto3.resource('s3')
@@ -249,8 +248,8 @@ def load_data(local= True):
         df['title_date'] = df[['case_title', 'date']].apply(lambda x: ' '.join(x), axis=1)
 
         df2 = df.iloc[:, [2, 12]]
-        df2 = df.drop_duplicates(subset='title_date')
-        df2 = df.reset_index(drop=True)
+        df2 = df2.drop_duplicates(subset='title_date')
+        df2 = df2.reset_index(drop=True)
 
         ## df2 is the 2 column df, whereas df is simply all the columns
     return df2, df

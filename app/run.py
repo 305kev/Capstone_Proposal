@@ -1,13 +1,14 @@
 # RM NOTE: to run, run the following command from the ./app directory
 # export FLASK_APP=run.py && python -m flask run
 
-from flask import Flask, url_for, render_template, request, json, jsonify
+from flask import Flask, url_for, render_template, request, json, jsonify, Response
 import os
 import _pickle as cPickle
 import copy
 import sys
 sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts/')
 import results
+import numpy as np
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -59,35 +60,32 @@ def get_relevant_info(list_of_case_indices, df):
                 }, ]
 
 	"""
-	try:
+	# Initialize a employee list
+	relevant_info = []
+	# create a instances for filling up employee list
+	for index in list_of_case_indices:
+		index = np.asscalar(index)
+		empDict = {
+			'case_id': index,
+			'case_title': df.case_title[index],
+			'case_date': df.date[index],
+			'case_text': df.case_text[index],
+			'case_html': df.html_format[index]
+			# 'case_matches': ## if this is MOST relevant part of text:
+			# this is a feature coming soon!!!
+		}
 
-		# Initialize a employee list
-		relevant_info = []
+		relevant_info.append(empDict)
 
-		# create a instances for filling up employee list
+	# convert to json data
+	jsonStr = json.dumps(relevant_info)
+	# print(type(jsonStr))
 
-		for index in list_of_case_indices:
-			relevant_info.append()
+	# print(jsonStr)
+	# print('')
+	# print(jsonify(CourtCases=jsonStr))
 
-			empDict = {
-				'case_id': index,
-				'case_title': df.case_title[index],
-				'case_data': df.date[index],
-				'case_text': df.case_text[index],
-				'case_html': df.html_format[index]
-				# 'case_matches': ## if this is MOST relevant part of text:
-				# this is a feature coming soon!!!
-			}
-
-			relevant_info.append(empDict)
-
-		# convert to json data
-		jsonStr = json.dumps(relevant_info)
-
-	except:
-		print (str('Nothing here'))
-
-	return jsonify(CourtCases=jsonStr)
+	return Response(jsonStr, mimetype='application/json')
 
 
 @app.route('/')
@@ -111,6 +109,7 @@ def get_results():
 	imd = request.form  ## Dictionary -
 	dict_results = imd.to_dict(flat=False)
 	query = ''.join(list(dict_results))
+
 	ranked_indices = process_query(query)
 
 	return get_relevant_info(ranked_indices, model[3])##JSON FILE

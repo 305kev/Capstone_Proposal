@@ -44,7 +44,6 @@ class Query:
         # regularIndex = {case_title: {word: [pos1, pos2, ...]}, ...}
 
 
-
     def tokenize(self, tokenize_query):
         """
         Tokenize: Removes all punctuation
