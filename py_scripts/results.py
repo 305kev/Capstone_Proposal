@@ -8,11 +8,171 @@ import sys
 sys.path.append('/Users/kevingmagana/DSI/capstone/capstone/py_scripts')
 from data_processing import DataProcessing
 import json
+import query_parser
+import _pickle as cPickle
+import os
+from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
+import boto3
+from io import StringIO, BytesIO
+import numpy as np
+from functools import reduce
+from nltk.tokenize import word_tokenize
+from nltk.stem.snowball import SnowballStemmer
+from nltk.corpus import stopwords
+import string
+from sklearn.metrics.pairwise import linear_kernel
+
+
+# DATAFRAME = pd.read_csv('../data/src_law/first_merged_case_law.csv', sep='\t', encoding='utf-8')
+
+
+def load_fitted_query_parser(file_path):
+    """
+    :param file_path: directory pathway, of the fitted query parser
+    :returns: Query object
+    """
+    ## read
+    with open(file_path, "rb") as f:
+        index_model = cPickle.load(f)
+    return index_model
+
+
+def indexed_results(parser, query):
+    """
+    :param parser: Query Object
+    :param query: String
+    :return: Dictionary, of indexed cases that matched the query
+            {keys: DocID, Value: Case_Title}
+    """
+    q= parser
+    return q.query(query)
+
+
+def get_vectors(data):
+    """
+    :param data: pandas series, all court_cases in corpus
+    :return: array of arrays, a matrix of all TF-IDF weights;
+            TfidfVectorizer object.
+    """
+    vectorizer = TfidfVectorizer(stop_words='english')
+    vectors = vectorizer.fit_transform(data).toarray()
+    return vectors, vectorizer
+
+def get_index_vectors(main_tfidf_vector, index_results ):
+    """
+    :param main_tfidf_vector: array of arrays, of the TF-IDF weights on all corpus
+    where the rows are the cases, and the columns are the entire vocabulary.
+    :param index_results: dict, of the indexed results where the keys are the
+    indices and the values are the cases
+        EX:
+        {1132: 'Peralta-Taveras v. Gonzales 06/06/2007',
+        4457: 'Moncrieffe v. Holder 04/23/2013', ... }
+
+    :return: array of arrays, of just the indexed case TF-IDF weights
+        where the rows are the indexed cases, and the colunns are the entire corpus vocabulary
+        EX:
+        array([
+                [0. , 0. , 0.  , ..., 0. , 0. , 0.],
+                [0. , 0. , 0.  , ..., 0. , 0. , 0.],
+                [0.01239151 , 0. , 0.  , ..., 0. , 0. , 0.],
+                [0. , 0. , 0.  , ..., 0. , 0. , 0.],
+                [0. , 0. , 0.  , ..., 0. , 0. , 0.] ... ,] )
+        IN:  array.shape
+        OUT: (127, 81825)
+
+    :return case_index_dict: dict, to keep track of the indexed cases and the
+    array values they get.
+            EX:
+            {key: case array value, value: case_index}
+            {1: 1132, 2: 4457, ... }
+    """
+
+    array = np.zeros((len(index_results), main_tfidf_vector.shape[1]))
+    case_index_dict ={}
+
+    for ind, res in enumerate(index_results):
+        array[ind] = main_tfidf_vector[res]
+        case_index_dict[ind] = res
+
+    return array, case_index_dict
+
+def query_vector(vect_obj, question ):
+    """
+    :param main_tfidf_vector: array of arrays, of the TF-IDF weights of entire corpus
+    :param stem_words: list, of stemmed words in query.
+
+    :param vect_obj: Tf-IDF object
+    :param question: string, the query
+    :return: 1-D array, vectorized query
+        ## EX:
+            IN: array.shape
+            OUT: (1, 81833)
+    """
+    # array = np.zeros((1, main_tfidf_vector.shape[1]))
+    #
+    # for ind, word in enumerate(stem_words):
+    #     feature_names = vect_obj.get_feature_names()
+    #     index = feature_names.index(word)
+    #     array[index] = 1  ### WHAT SHOULD GO HERE?????
+    #                     ### Simple count???
+    #                     ### How to vectorize query...
+    tokenized_queries = vect_obj.transform(list(question))
+    return tokenized_queries
+
+def cosine_similarity(tokenized_query, ind_vectors):
+    """
+    :param tokenized_query: 1-D array, vector of query for cosine similarity ranking
+    :param ind_vectors:
+    :return: 1-D array, of cosine similarity scores
+    """
+    return linear_kernel(tokenized_query, ind_vectors)
 
 
 
+def get_top_values(lst, n):
+    '''
+    INPUT: LIST, INTEGER, LIST
+    OUTPUT: LIST
 
-DATAFRAME = pd.read_csv('../data/src_law/first_merged_case_law.csv', sep='\t', encoding='utf-8')
+    Given a list of values, find the indices with the highest n values.
+    Return the labels for each of these indices.
+
+    e.g.
+    lst = [7, 3, 2, 4, 1]
+    n = 2
+    labels = ["cat", "dog", "mouse", "pig", "rabbit"]
+    output: ["cat", "pig"]
+
+    [-1:-n-1:-1]
+    '''
+    return [i for i in np.argsort(lst)[-1:-n - 1:-1]]
+
+
+def tokenize(tokenize_query):
+    """
+    Tokenize: Removes all punctuation
+    :param tokenize_query: string, query
+    :returns: list of strings, tokenized words
+    """
+    table = str.maketrans({key: None for key in string.punctuation})
+    return word_tokenize(tokenize_query.translate(table).lower())
+
+def remove_stop_words(remove_stop_text):
+    """
+    :param case_text: list of strings (tokens)
+    :returns: list of strings(tokens) without stopwords
+    """
+    stop = set(stopwords.words('english'))
+    return [word for word in remove_stop_text if word not in stop]
+
+def stem_words(stem_word_text):
+    """
+    :param without_stop: list of strings without stop words
+    :return: list of strings (stemmed words)
+    """
+    snowball = SnowballStemmer('english')
+    return [snowball.stem(word) for word in stem_word_text]
+
 
 def results(search_query, ready=False):
     """
@@ -22,26 +182,168 @@ def results(search_query, ready=False):
     :return: dictionary of dictionaries
     """
 
-    if ready:
-        return "Not yet!"
+    ## Step 1:
+    q= loaded_query_parser() ## needs to be made!
+    results = q.query(search_query)
 
+    ## Step 2:
+    ## Load the TF-IDF Matrix
+        ## Dict of numpy arrays -- match by DOC-ID
+
+    tfidf = loaded_tfidf() ## needs to be made!
+
+    ## Step 3:
+    ## Create a new TF-IDF matrix of JUST the INDEXED files
+        ## Dict of numpy arrays -- match by DOC-ID
+
+    indexed_tfidf = indexed_tfidf(tfidf, results ) ## needs to be made!
+        ## TF-IDF matrix matched on indexed files
+
+
+    ## Step 4: Run Cosine Similarity Scoring and Ranking
+    query_vector =q.query_vectorized() ## needs to be made!
+    cosine_sim  = (indexed_tfidf, query_vector)
+
+        ## dict, key: Doc ID, value: Case Title, Cased
+
+    ## Step 5: Return the relevant info for Front End.
+
+    """
+                { 
+                    case_id: 1,
+                    case_title: “Roe V Wade Supreme Court United States”,
+                    case_date: “1970-10-01",
+                    case_text: “The types of law pose a domain-knowledge challenge as well as a programmatic one. For the domain-based knowledge, I am working with several law students as well as reading up on the basic legal structures to isolate the importance of different legal document types. On the programmatic side, the task will be to classify the type of law: from case law (opinions), to statutory law (legislation), to (executive agency) regulation, etc. Next, I will implement a Natural Language Processing algorithm to parse through each type of legal document and identify similarity between text to return relevant information. Finally, I will use words associted with a positive and negative tone to score each document on a positive/negative scale to provide additional information to the user”,
+                    case_html: sampleDiv,
+                    case_matches: [“flat inconsistency between the contemporary statement and the later statement”, “was sufficient” ]
+                },
+    """
+    ##
+    pass
+
+def load_data(local= True):
+    """
+    load_data is a function that will load the csv file from AWS S3 bucket, and will return the
+    desired dataframe with the title_date and case_text columns.
+
+    :return: dataframe, with 2 columns: title_date and case_text
+    """
+    if local:
+        # -- LOAD FROM LOCAL MACHINE --
+        df = pd.read_csv('/Users/kevingmagana/DSI/capstone/case_corpus.csv')
+        df = df.dropna()
+        df['title_date'] = df[['case_title', 'date']].apply(lambda x: ' '.join(x), axis=1)
+
+
+        df2 = df.iloc[:, [2, 12]]
+        df2 = df.drop_duplicates(subset='title_date')
+        df2 = df.reset_index(drop=True)
     else:
-        case_court =  DATAFRAME.court[0]
-        case_title = DATAFRAME.case_title[0]
-        case_text = DATAFRAME.case_text[0]
-        case_date = DATAFRAME.date[0]
-        case_tags= DATAFRAME.tags[0]
+        # -- LOAD FROM Amazon Web Services --
+        s3 = boto3.resource('s3')
+        client = boto3.client('s3')  # low-level functional API
 
-        return [{'case_title': case_title}, {'case_date': case_date}, {'case_text': case_text}]
+        obj = client.get_object(Bucket='court-case-data', Key='merged_data_with_html_format.csv')
+        df = pd.read_csv(BytesIO(obj['Body'].read()))
+        df = df.dropna()
+        df['title_date'] = df[['case_title', 'date']].apply(lambda x: ' '.join(x), axis=1)
 
+        df2 = df.iloc[:, [2, 12]]
+        df2 = df.drop_duplicates(subset='title_date')
+        df2 = df.reset_index(drop=True)
+
+        ## df2 is the 2 column df, whereas df is simply all the columns
+    return df2, df
+
+
+def load_model():
+    ## df2 is the 2 column df, whereas df is simply all the columns
+    df2, df = load_data(local=True)
+    data = df2.case_text
+
+    # Step 3: Load fitted query parser
+    FILE_PATH = "/Users/kevingmagana/DSI/capstone/fitted_query_parser_updated4.pkl"
+    loaded_parser = load_fitted_query_parser(FILE_PATH)
+
+    # Step 5: Vectorize corpus
+    tf_idf_vectors, vectorizer_obj= get_vectors(data)
+
+    return loaded_parser, vectorizer_obj, tf_idf_vectors, df
+
+
+# def process_query(query):
+#     """
+#     :param query: string, the query
+#     :return: list, of indices or DOC IDs
+#     """
+#
+#     # Step 1: Intake and get Indexed Cases
+#     query =  query
+#     indices = results.indexed_results(model[2], query)
+#
+#     # Step 2: Get index_vectors and case_val dictionary
+#     index_vectors, case_value_dictionary= results.get_index_vectors(model[5], indices)
+#
+#     # Step 3: Vectorize query
+#     vectorized_query = results.query_vector(model[3], query)
+#
+#     # Step 4: Get Cosine similarities
+#     cosine_similarities = cosine_similarity(vectorized_query, model[4])
+#
+#     # Step 5: Get top results and rank them
+#     top_results = (get_top_values(cosine_similarities[0], 10), query)
+#
+#     res = [case_value_dictionary[array_value] for array_value in top_results[0]]
+#
+#     return res
 
 if __name__ == "__main__":
+    from query_parser import Query
+    # Step 1: Load Data
+    df = load_data(local=True)
+    data = df.case_text
+
+    print('What would you like to know about immigration law? ')
+    wait = input("")
+    print('Examples include: ',
+          'What is the penalty for drug trafficking?',
+          'What is the deportation process for human traffickers?',
+          'Can immigrants seek asylum from Mexico?')
+    wait = input("")
+
+    # Step 2: Ask and parse Legal Query/Question
+    query  = str(input("Ask Legal Question Related to Immigration: "))
+    print('Please Wait ... ')
+    # tokenized = tokenize(query)
+    # removed_stop_words = remove_stop_words(tokenized)
+    # stemmed_words = stem_words(removed_stop_words)
+
+    # Step 3: Load fitted query parser
+    FILE_PATH = "/Users/kevingmagana/DSI/capstone/fitted_query_parser_updated4.pkl"
+    loaded_parser = load_fitted_query_parser(FILE_PATH)
+
+    # Step 4: Find matched cases with query terms
+    indices = indexed_results(loaded_parser, query)
+    """ EX: 
+        {1132: 'Peralta-Taveras v. Gonzales 06/06/2007', 
+        4457: 'Moncrieffe v. Holder 04/23/2013', ... """
+
+    # Step 5: Vectorize corpus and query
+    tf_idf_vectors, vectorizer_obj= get_vectors(data)
+    index_vectors, case_value_dictionary= get_index_vectors(tf_idf_vectors, indices)
+    vectorized_query = query_vector(vectorizer_obj, query)
+        ## Potentially pass stemmed_words and tf-idf vectors above
+
+    # Step 6: Rank using cosine similarity
+    cosine_similarities = cosine_similarity(vectorized_query, index_vectors)
+    top_results = (get_top_values(cosine_similarities[0], 10), query)
+
+    print(top_results[1])
+    print([case_value_dictionary[array_value] for array_value in top_results[0]])
 
 
-    # model= None
-    search_query = "What is a good first query?"
-    title, date, text = results(search_query)
 
-    print(title)
-    print(date)
-    print(text)
+
+
+
+
