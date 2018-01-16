@@ -18,8 +18,11 @@
 
 <script>
 	$(document).ready(function() {
-		console.log("something");
 		$("#search-btn").click(function() {
+			$("#full-case").toggle(false);
+			$("#search-results-container").toggle(true);
+			$("#search-results-container").empty();
+
 			$.ajax({
 				url: "/get_results",
 				data: $("#search-box").val(),
@@ -27,6 +30,7 @@
 				success: function(res) {
 					console.log("success");
 					console.log(res);
+					renderData(res)
 				},
 				error: function(res) {
 					console.log("error");
@@ -34,53 +38,77 @@
 				}
 			})
 
-			var sampleData = [
-				{
-					case_title: "Roe V Wade Supreme Court United States",
-					case_date: "1970-10-01",
-					case_text: "The types of law pose a domain-knowledge challenge as well as a programmatic one. For the domain-based knowledge, I am working with several law students as well as reading up on the basic legal structures to isolate the importance of different legal document types. On the programmatic side, the task will be to classify the type of law: from case law (opinions), to statutory law (legislation), to (executive agency) regulation, etc. Next, I will implement a Natural Language Processing algorithm to parse through each type of legal document and identify similarity between text to return relevant information. Finally, I will use words associted with a positive and negative tone to score each document on a positive/negative scale to provide additional information to the user"
-				},
-				{
-					case_title: "Roe V Wade Supreme Court United States",
-					case_date: "1970-10-01",
-					case_text: "The types of law pose a domain-knowledge challenge as well as a programmatic one. For the domain-based knowledge, I am working with several law students as well as reading up on the basic legal structures to isolate the importance of different legal document types. On the programmatic side, the task will be to classify the type of law: from case law (opinions), to statutory law (legislation), to (executive agency) regulation, etc. Next, I will implement a Natural Language Processing algorithm to parse through each type of legal document and identify similarity between text to return relevant information. Finally, I will use words associted with a positive and negative tone to score each document on a positive/negative scale to provide additional information to the user"
-				},
-				{
-					case_title: "Roe V Wade Supreme Court United States",
-					case_date: "1970-10-01",
-					case_text: "The types of law pose a domain-knowledge challenge as well as a programmatic one. For the domain-based knowledge, I am working with several law students as well as reading up on the basic legal structures to isolate the importance of different legal document types. On the programmatic side, the task will be to classify the type of law: from case law (opinions), to statutory law (legislation), to (executive agency) regulation, etc. Next, I will implement a Natural Language Processing algorithm to parse through each type of legal document and identify similarity between text to return relevant information. Finally, I will use words associted with a positive and negative tone to score each document on a positive/negative scale to provide additional information to the user"
-				},
-				{
-					case_title: "Roe V Wade Supreme Court United States",
-					case_date: "1970-10-01",
-					case_text: "The types of law pose a domain-knowledge challenge as well as a programmatic one. For the domain-based knowledge, I am working with several law students as well as reading up on the basic legal structures to isolate the importance of different legal document types. On the programmatic side, the task will be to classify the type of law: from case law (opinions), to statutory law (legislation), to (executive agency) regulation, etc. Next, I will implement a Natural Language Processing algorithm to parse through each type of legal document and identify similarity between text to return relevant information. Finally, I will use words associted with a positive and negative tone to score each document on a positive/negative scale to provide additional information to the user"
-				},
-				{
-					case_title: "Roe V Wade Supreme Court United States",
-					case_date: "1970-10-01",
-					case_text: "The types of law pose a domain-knowledge challenge as well as a programmatic one. For the domain-based knowledge, I am working with several law students as well as reading up on the basic legal structures to isolate the importance of different legal document types. On the programmatic side, the task will be to classify the type of law: from case law (opinions), to statutory law (legislation), to (executive agency) regulation, etc. Next, I will implement a Natural Language Processing algorithm to parse through each type of legal document and identify similarity between text to return relevant information. Finally, I will use words associted with a positive and negative tone to score each document on a positive/negative scale to provide additional information to the user"
-				},
-			];
 
-			for (var s in sampleData) {
-				var data = sampleData[s];
-				var div = `
-					<div style="width: 600px; border: 1px solid black; box-shadow: 2px 2px gray;">
-						<div style="display: flex; justify-content: center; background-color: #28a745; color: white;">
+			function renderData(sampleData) {
+				for (var s in sampleData) {
+					var data = sampleData[s];
+					var div = `
+						<div style="width: 600px; border: 1px solid black; box-shadow: 2px 2px gray;">
+							<div class="case-title" style="display: flex; justify-content: center; background-color: #28a745; color: white; cursor: pointer;" data-case-id="${data.case_id}">
+								<div style="margin: 10px 10px 10px 10px">
+									${data.case_title}, ${data.case_date}
+								</div>
+							</div>
 							<div style="margin: 10px 10px 10px 10px">
-								${data.case_title}, ${data.case_date}
+								${data.case_text}
 							</div>
 						</div>
-						<div style="margin: 10px 10px 10px 10px">
-							${data.case_text}
-						</div>
-					</div>
-					<br/>
-					<br/>
-				`;
-				$("#search-results-container").append(div);
+						<br/>
+						<br/>
+					`;
+					$("#search-results-container").append(div);
+				}
+
+				$(".case-title").click(function() {
+					console.log("clicked case title");
+					$("#search-results-container").toggle(false);
+					$("#full-case").toggle(true);
+
+					var caseId = parseInt($(this).data("caseId"));
+
+
+					var thisCase = findCase(caseId, sampleData);
+
+					var case_matches = thisCase.case_matches;
+					var case_html = thisCase.case_html.trim();
+
+					if (case_matches) {
+						console.log(case_matches);
+
+						for (var m in thisCase.case_matches) {
+							var match = thisCase.case_matches[m];
+							var index = case_html.indexOf(match);
+							var length = match.length;
+
+							var contentA = "<span style='background-color: yellow; font-weight: bold; border: 1px solid black;'>";
+							var contentB = "</span>";
+
+							case_html = [
+								case_html.slice(0, index),
+								contentA,
+								case_html.slice(index, index + length),
+								contentB,
+								case_html.slice(index + length)
+							].join("");
+
+						}
+
+					}
+					$("#full-case").html(case_html);
+
+				});
+
 			}
+
 		});
+		function findCase(caseId, sampleData) {
+			for (var c in sampleData) {
+				var thisCase = sampleData[c];
+				if (caseId == thisCase.case_id) {
+					return thisCase;
+				}
+			}
+		}
 	});
 </script>
 
@@ -114,10 +142,8 @@
 		<br/><br/>
 
 		<div style="display: flex; justify-content: center;">
-			<div id="search-results-container">
-
-			</div>
+			<div id="search-results-container"></div>
+			<div style="width: 1000px; display: none; padding: 10 10 10 10; background-color: #e6e6e6; border: 1px solid black;"" id="full-case"></div>
 		</div>
-	</div>
 
 </body>
