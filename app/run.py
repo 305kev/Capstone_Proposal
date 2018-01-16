@@ -97,7 +97,6 @@ def root():
 
 @app.route("/get_results", methods=["POST"])
 def get_results():
-	#NOTES FOR KEVIN
 	# here, do something to prove that the model has been loaded in memory
 	# when you started the application, and persists in memory, get results
 	# will be called everytime that you hit search on the front-end, i
