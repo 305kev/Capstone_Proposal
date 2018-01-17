@@ -299,7 +299,7 @@ def load_model():
 if __name__ == "__main__":
     from query_parser import Query
     # Step 1: Load Data
-    df = load_data(local=True)
+    df2, df = load_data(local=True)
     data = df.case_text
 
     print('What would you like to know about immigration law? ')
