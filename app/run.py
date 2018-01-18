@@ -5,7 +5,12 @@ from flask import Flask, url_for, render_template, request, json, jsonify, Respo
 import os
 import copy
 import sys
-sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts/')
+
+try:
+    sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts')
+except:
+    sys.path.append('/home/ec2-user/github/Capstone_Proposal/py_scripts')
+
 import results
 import graph_pipeline
 import numpy as np

@@ -6,6 +6,7 @@ https://bitbucket.org/fbennett/search-and-awareness-platform-courtlistener
 Can be found in the Alert/ Citations folder
 
 """
+
 import reporter_tokenizer
 
 import os

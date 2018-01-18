@@ -8,7 +8,11 @@ import math
 import pandas as pd
 import numpy as np
 import sys
-sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts/')
+try:
+    sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts')
+except:
+    sys.path.append('/home/ec2-user/github/Capstone_Proposal/py_scripts')
+
 import find_citation
 import networkx as nx
 import pandas as pd

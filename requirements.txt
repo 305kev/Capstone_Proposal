@@ -1,0 +1,11 @@
+Flask
+gunicorn
+numpy
+pandas
+bs4
+requests
+sklearn
+nltk
+autocorrect
+textblob
+signal

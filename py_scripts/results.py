@@ -5,8 +5,12 @@ The online legal research engine
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import sys
-sys.path.append('/Users/kevingmagana/DSI/capstone/capstone/py_scripts')
+try:
+    sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts')
+except:
+    sys.path.append('/home/ec2-user/github/Capstone_Proposal/py_scripts')
 import json
+
 import query_parser
 import _pickle as cPickle
 import os
@@ -21,8 +25,6 @@ from nltk.corpus import stopwords
 import string
 from sklearn.metrics.pairwise import linear_kernel
 
-
-# DATAFRAME = pd.read_csv('../data/src_law/first_merged_case_law.csv', sep='\t', encoding='utf-8')
 
 
 def load_fitted_query_parser(file_path):
@@ -171,54 +173,6 @@ def stem_words(stem_word_text):
     """
     snowball = SnowballStemmer('english')
     return [snowball.stem(word) for word in stem_word_text]
-
-
-def results(search_query, ready=False):
-    """
-    Uses a model to return the top k most relevant documents
-    :param model: object, a trained SK-Learn style model object
-    :param to_predict: string, raw string query
-    :return: dictionary of dictionaries
-    """
-
-    ## Step 1:
-    q= loaded_query_parser() ## needs to be made!
-    results = q.query(search_query)
-
-    ## Step 2:
-    ## Load the TF-IDF Matrix
-        ## Dict of numpy arrays -- match by DOC-ID
-
-    tfidf = loaded_tfidf() ## needs to be made!
-
-    ## Step 3:
-    ## Create a new TF-IDF matrix of JUST the INDEXED files
-        ## Dict of numpy arrays -- match by DOC-ID
-
-    indexed_tfidf = indexed_tfidf(tfidf, results ) ## needs to be made!
-        ## TF-IDF matrix matched on indexed files
-
-
-    ## Step 4: Run Cosine Similarity Scoring and Ranking
-    query_vector =q.query_vectorized() ## needs to be made!
-    cosine_sim  = (indexed_tfidf, query_vector)
-
-        ## dict, key: Doc ID, value: Case Title, Cased
-
-    ## Step 5: Return the relevant info for Front End.
-
-    """
-                { 
-                    case_id: 1,
-                    case_title: “Roe V Wade Supreme Court United States”,
-                    case_date: “1970-10-01",
-                    case_text: “The types of law pose a domain-knowledge challenge as well as a programmatic one. For the domain-based knowledge, I am working with several law students as well as reading up on the basic legal structures to isolate the importance of different legal document types. On the programmatic side, the task will be to classify the type of law: from case law (opinions), to statutory law (legislation), to (executive agency) regulation, etc. Next, I will implement a Natural Language Processing algorithm to parse through each type of legal document and identify similarity between text to return relevant information. Finally, I will use words associted with a positive and negative tone to score each document on a positive/negative scale to provide additional information to the user”,
-                    case_html: sampleDiv,
-                    case_matches: [“flat inconsistency between the contemporary statement and the later statement”, “was sufficient” ]
-                },
-    """
-    ##
-    pass
 
 def load_data(local= True):
     """
