@@ -253,46 +253,50 @@ def load_model():
 if __name__ == "__main__":
     from query_parser import Query
     # Step 1: Load Data
-    df2, df = load_data(local=True)
-    data = df.case_text
+    remote = input('On AWS EC2 Instance? (y/n):')
+    if remote == 'y':
+        df2, df = load_data(local=False)
+    else:
+        df2, df = load_data(local=True)
+        data = df.case_text
 
-    print('What would you like to know about immigration law? ')
-    wait = input("")
-    print('Examples include: ',
-          'What is the penalty for drug trafficking?',
-          'What is the deportation process for human traffickers?',
-          'Can immigrants seek asylum from Mexico?')
-    wait = input("")
+        print('What would you like to know about immigration law? ')
+        wait = input("")
+        print('Examples include: ',
+              'What is the penalty for drug trafficking?',
+              'What is the deportation process for human traffickers?',
+              'Can immigrants seek asylum from Mexico?')
+        wait = input("")
 
-    # Step 2: Ask and parse Legal Query/Question
-    query  = str(input("Ask Legal Question Related to Immigration: "))
-    print('Please Wait ... ')
-    # tokenized = tokenize(query)
-    # removed_stop_words = remove_stop_words(tokenized)
-    # stemmed_words = stem_words(removed_stop_words)
+        # Step 2: Ask and parse Legal Query/Question
+        query  = str(input("Ask Legal Question Related to Immigration: "))
+        print('Please Wait ... ')
+        # tokenized = tokenize(query)
+        # removed_stop_words = remove_stop_words(tokenized)
+        # stemmed_words = stem_words(removed_stop_words)
 
-    # Step 3: Load fitted query parser
-    FILE_PATH = "/Users/kevingmagana/DSI/capstone/fitted_query_parser_updated4.pkl"
-    loaded_parser = load_fitted_query_parser(FILE_PATH)
+        # Step 3: Load fitted query parser
+        FILE_PATH = "/Users/kevingmagana/DSI/capstone/fitted_query_parser_updated4.pkl"
+        loaded_parser = load_fitted_query_parser(FILE_PATH)
 
-    # Step 4: Find matched cases with query terms
-    indices = indexed_results(loaded_parser, query)
-    """ EX: 
-        {1132: 'Peralta-Taveras v. Gonzales 06/06/2007', 
-        4457: 'Moncrieffe v. Holder 04/23/2013', ... """
+        # Step 4: Find matched cases with query terms
+        indices = indexed_results(loaded_parser, query)
+        """ EX: 
+            {1132: 'Peralta-Taveras v. Gonzales 06/06/2007', 
+            4457: 'Moncrieffe v. Holder 04/23/2013', ... """
 
-    # Step 5: Vectorize corpus and query
-    tf_idf_vectors, vectorizer_obj= get_vectors(data)
-    index_vectors, case_value_dictionary= get_index_vectors(tf_idf_vectors, indices)
-    vectorized_query = query_vector(vectorizer_obj, query)
-        ## Potentially pass stemmed_words and tf-idf vectors above
+        # Step 5: Vectorize corpus and query
+        tf_idf_vectors, vectorizer_obj= get_vectors(data)
+        index_vectors, case_value_dictionary= get_index_vectors(tf_idf_vectors, indices)
+        vectorized_query = query_vector(vectorizer_obj, query)
+            ## Potentially pass stemmed_words and tf-idf vectors above
 
-    # Step 6: Rank using cosine similarity
-    cosine_similarities = cosine_similarity(vectorized_query, index_vectors)
-    top_results = (get_top_values(cosine_similarities[0], 10), query)
+        # Step 6: Rank using cosine similarity
+        cosine_similarities = cosine_similarity(vectorized_query, index_vectors)
+        top_results = (get_top_values(cosine_similarities[0], 10), query)
 
-    print(top_results[1])
-    print([case_value_dictionary[array_value] for array_value in top_results[0]])
+        print(top_results[1])
+        print([case_value_dictionary[array_value] for array_value in top_results[0]])
 
 
 
