@@ -201,12 +201,12 @@ def load_data(local= True):
         df = df.dropna()
         df['title_date'] = df[['case_title', 'date']].apply(lambda x: ' '.join(x), axis=1)
 
-        df2 = df.iloc[:, [2, 12]]
-        df2 = df2.drop_duplicates(subset='title_date')
-        df2 = df2.reset_index(drop=True)
+        # df2 = df.iloc[:, [2, 12]]
+        # df2 = df2.drop_duplicates(subset='title_date')
+        # df2 = df2.reset_index(drop=True)
 
         ## df2 is the 2 column df, whereas df is simply all the columns
-    return df2, df
+    return df
 
 
 def load_model():
