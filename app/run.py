@@ -6,10 +6,10 @@ import os
 import copy
 import sys
 
-try:
-    sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts')
-except:
-    sys.path.append('/home/ec2-user/github/Capstone_Proposal/py_scripts')
+# try:
+#     sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts')
+# except:
+sys.path.append('/home/ec2-user/github/Capstone_Proposal/py_scripts')
 
 import results
 import graph_pipeline
