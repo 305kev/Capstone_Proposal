@@ -31,9 +31,15 @@ import _pickle as cPickle
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-model = results.load_model()
-with open("/Users/kevingmagana/DSI/capstone/fitted_graph_model.pkl", "rb") as f:
-    graph_recommendations = cPickle.load(f)
+model = results.load_model(first_time = False)
+
+try:
+    with open("/Users/kevingmagana/DSI/capstone/fitted_graph_model.pkl", "rb") as f:
+        graph_recommendations = cPickle.load(f)
+except:
+    with open("/home/ec2-user/github/fitted_graph.pkl", "rb") as f:
+        graph_recommendations = cPickle.load(f)
+
 
 def process_query(web_query):
     """

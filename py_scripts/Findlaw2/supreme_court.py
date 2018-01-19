@@ -281,3 +281,4 @@ if __name__ == "__main__":
     df = run_scraper(first_url, df)
     write_file_to_s3(df)
     print(df.tail())
+

@@ -202,21 +202,31 @@ def load_data(local= True):
         df['title_date'] = df[['case_title', 'date']].apply(lambda x: ' '.join(x), axis=1)
 
         # df2 = df.iloc[:, [2, 12]]
-        # df2 = df2.drop_duplicates(subset='title_date')
-        # df2 = df2.reset_index(drop=True)
+        df = df.drop_duplicates(subset='title_date')
+        df = df.reset_index(drop=True)
 
         ## df2 is the 2 column df, whereas df is simply all the columns
     return df
 
 
-def load_model():
+def load_model(first_time = True):
     ## df2 is the 2 column df, whereas df is simply all the columns
-    df2, df = load_data(local=True)
-    data = df2.case_text
+    if first_time:
+        df2, df = load_data(local=True)
+        data = df2.case_text
+    else:
+        try:
+            df= pd.read_csv('/Users/kevingmagana/DSI/capstone/case_corpus.csv')
+        except:
+            df = pd.read_csv('/home/ec2-user/github/dataset.csv')
 
     # Step 3: Load fitted query parser
-    FILE_PATH = "/Users/kevingmagana/DSI/capstone/fitted_query_parser_updated4.pkl"
-    loaded_parser = load_fitted_query_parser(FILE_PATH)
+    try:
+        FILE_PATH = "/Users/kevingmagana/DSI/capstone/fitted_query_parser_updated4.pkl"
+        loaded_parser = load_fitted_query_parser(FILE_PATH)
+    except:
+        FILE_PATH = "/home/ec2-user/github/fitted_query_parser3.pkl"
+        loaded_parser = load_fitted_query_parser(FILE_PATH)
 
     # Step 5: Vectorize corpus
     tf_idf_vectors, vectorizer_obj= get_vectors(data)
