@@ -217,9 +217,10 @@ def load_model(first_time = True):
     else:
         try:
             df= pd.read_csv('/Users/kevingmagana/DSI/capstone/case_corpus.csv')
+            data = df.case_text
         except:
             df = pd.read_csv('/home/ec2-user/github/dataset.csv')
-
+            data = df.case_text
     # Step 3: Load fitted query parser
     try:
         FILE_PATH = "/Users/kevingmagana/DSI/capstone/fitted_query_parser_updated4.pkl"

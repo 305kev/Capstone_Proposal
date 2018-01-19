@@ -170,6 +170,7 @@ class GraphRecommender:
                 check: dict, {Community: Node}
         """
         # parts = {Node: Community}
+
         parts = community.best_partition(g, weight='weight')
         # check = {Community: Node}
         check = {}
