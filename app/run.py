@@ -9,7 +9,9 @@ import sys
 # try:
 #     sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts')
 # except:
+# sys.path.append('/home/ec2-user/github/Capstone_Proposal/py_scripts')
 sys.path.append('/home/ec2-user/github/Capstone_Proposal/py_scripts')
+sys.path.append("/Users/rmathur101/Desktop/WORKING_ON/PROJECTS/LEGAL_AI/Capstone_Proposal/py_scripts")
 
 import results
 import graph_pipeline
@@ -200,15 +202,15 @@ def get_relevant_info(list_of_case_indices, df, legal_query):
         # 'case_sentimentality': sentimentality,
         # 'case_recommendations': recommendations
         """
-        Sentimentality Score: 
-        0 - 10 (0 is fully negative, and 10 fully positive) 
-        Display in preview -- Green being positive, 
-                            Red being negative. With the number. 
+        Sentimentality Score:
+        0 - 10 (0 is fully negative, and 10 fully positive)
+        Display in preview -- Green being positive,
+                            Red being negative. With the number.
 
-        Recommendations: a list of 5 recommendations for each case. 
+        Recommendations: a list of 5 recommendations for each case.
         Display in preview -- a dropdown of similar cases
-                within research results -- a dropdown or div box 
-                with the list of "similar recommended cases"       
+                within research results -- a dropdown or div box
+                with the list of "similar recommended cases"
         """
 
         relevant_info.append(empDict)
