@@ -35,13 +35,13 @@ the list of court cases that include each token.
 
 
 class Query:
-    def __init__(self, index_object, caseNames, indices, union=False):  # query, union=True):
+    def __init__(self, index_object, caseNames, indeces, union=False):  # query, union=True):
 
         self.index = index_object
         self.caseNames = caseNames
         self.union = union  # If False == Intersection
-        self.indices = indices
-        # indices = {'Porro v. Barnes 11/09/2010': 0, 'Garcia-Carbajal v. Holder 11/05/2010': 1, ...}
+        self.indeces = indeces
+        # indeces = {'Porro v. Barnes 11/09/2010': 0, 'Garcia-Carbajal v. Holder 11/05/2010': 1, ...}
         self.invertedIndex = self.index.totalIndex
         # invertedIndex =  {word: {case_title: [pos1, pos2]}, ...}, ...}
         self.regularIndex = self.index.regdex
@@ -94,15 +94,14 @@ class Query:
             self.removed_stop_words = self.remove_stop_words(self.tokenized)
             self.stemmed_words = self.stem_words(self.removed_stop_words)
 
+
             if len(self.stemmed_words) == 1:
                 results = self.one_word_query(self.stemmed_words)
             else:
                 results = self.free_text_query(self.stemmed_words)
                 #  {'Porro v. Barnes 11/09/2010', 'Garcia-Carbajal v. Holder 11/05/2010', ... }
-
-        index_case_dict = {self.indices[result]: result for result in results}
+        index_case_dict = {self.indeces[result]: result for result in results}
             # {0: 'Porro v. Barnes 11/09/2010', 1: 'Garcia-Carbajal v. Holder 11/05/2010', ... }
-
         return index_case_dict
 
     def one_word_query(self, word):
@@ -111,9 +110,11 @@ class Query:
         :param word: string, a word/token
         :return: list, of cases where the word/token appears
         """
+        if type(word) == list:
+            word = word[0]
 
-        if word[0] in self.invertedIndex.keys():
-            return [casename for casename in self.invertedIndex[word[0]].keys()]
+        if word in self.invertedIndex.keys():
+            return [casename for casename in self.invertedIndex[word].keys()]
         else:
             return []
 
@@ -127,6 +128,7 @@ class Query:
         result = []
         for word in list_of_strings:
             result.append(self.one_word_query(word))
+
 
         # table = str.maketrans({key: None for key in string.punctuation})
         # case.translate(table).upper()

@@ -24,7 +24,7 @@ def tokenize(text):
           strings in the list.
 
        Example:
-       >>>tokenize('See Roe v. Wade, 410 U. S. 113 (1973)')
+       tokenize('See Roe v. Wade, 410 U. S. 113 (1973)')
        ['See', 'Roe', 'v.', 'Wade,', '410', 'U. S.', '113', '(1973)']
     '''
     strings = REPORTER_RE.split(text)
