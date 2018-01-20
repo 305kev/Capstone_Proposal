@@ -5,13 +5,7 @@ The online legal research engine
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import sys
-try:
-    sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts')
-except:
-    sys.path.append('/home/ec2-user/github/Capstone_Proposal/py_scripts')
-import json
 
-import query_parser
 import _pickle as cPickle
 import os
 from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
@@ -24,6 +18,7 @@ from nltk.stem.snowball import SnowballStemmer
 from nltk.corpus import stopwords
 import string
 from sklearn.metrics.pairwise import linear_kernel
+import json
 
 
 
@@ -231,7 +226,6 @@ def load_model(first_time = True):
 
     # Step 5: Vectorize corpus
     tf_idf_vectors, vectorizer_obj= get_vectors(data)
-
     return loaded_parser, vectorizer_obj, tf_idf_vectors, df
 
 

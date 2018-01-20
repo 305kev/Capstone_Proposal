@@ -7,9 +7,10 @@ import copy
 import sys
 
 # try:
-#     sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts')
+sys.path.append('/Users/kevingmagana/DSI/capstone/capstone-update/Capstone_Proposal/py_scripts')
+
 # except:
-sys.path.append('/home/ec2-user/github/Capstone_Proposal/py_scripts')
+#     sys.path.append('/home/ec2-user/github/Capstone_Proposal/py_scripts')
 
 import results
 import graph_pipeline
@@ -31,7 +32,7 @@ import _pickle as cPickle
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-model = results.load_model(first_time = False)
+model = results.load_model(first_time = False) ## loaded_parser, vectorizer_obj, tf_idf_vectors, df
 
 try:
     with open("/Users/kevingmagana/DSI/capstone/fitted_graph_model.pkl", "rb") as f:
@@ -54,12 +55,18 @@ def process_query(web_query):
         query_split.append(spell(words))
 
     query_spell_checked = " ".join(query_split)
+
     indices = results.indexed_results(model[0], query_spell_checked)
+
+    # print(indices)
     # Step 2: Get index_vectors and case_val dictionary
     index_vectors, case_value_dictionary= results.get_index_vectors(model[2], indices)
+
     # Step 3: Vectorize query
     vectorized_query = results.query_vector(model[1], query_spell_checked)
     # Step 4: Get Cosine similarities
+
+
     cosine_similarities = results.cosine_similarity(vectorized_query, index_vectors)
     # Step 5: Get top results and rank them (top 10 right now...)
     top_results = (results.get_top_values(cosine_similarities[0], 10), query_spell_checked)
