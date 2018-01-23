@@ -1,7 +1,7 @@
 
 # A.I. Legal Research Assistant
 
-### Kevin Magana
+[__Spring 2017 Galvanize Data Science Immersive__](https://www.galvanize.com/austin)
 
 ## Motivation: 
 
