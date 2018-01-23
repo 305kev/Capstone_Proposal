@@ -24,7 +24,7 @@ Any U.S. citizen is entitled to legal representation under the law. The same is 
 <br> Figure 1. Distribution of hourly rates for divorce attorneys, https://www.nolo.com/legal-encyclopedia/ctp/cost-of-divorce.html
 
 
-## The problem:
+## The Problem:
 <br>
 
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pie.png" width="425"/><img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/current_searches.png" width="425"/>
