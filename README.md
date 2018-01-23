@@ -13,11 +13,8 @@ Any U.S. citizen is entitled to legal representation under the law. The same is 
 
 
 
-![Demo](https://media.giphy.com/media/3ohc0VEmDW6PWSCvfO/giphy.gif)
+![Demo](https://github.com/305kev/Capstone_Proposal/blob/master/images/demo.gif)
 
-![Demo](http://i.imgur.com/wVOzU7y.gif)
-
-![Demo](https://imgur.com/2KELO8j)
 
 
 
