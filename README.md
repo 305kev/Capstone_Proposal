@@ -25,8 +25,8 @@ Any U.S. citizen is entitled to legal representation under the law. The same is 
 
 
 ## The problem:
-
 <br>
+
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pie.png" width="425"/><img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/current_searches.png" width="425"/>
 
 <br> Figure 2. Average time spent on legal research, http://bit.ly/1vfqzm3
