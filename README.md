@@ -103,7 +103,7 @@ and improve performance on.
 Additionally, one major drawback to my analysis is that it's based on cases scraped going back about 25 years, which highly biases results that are more recent. Future work could focus on acquiring a larger amount of data, as there over 200,000 immigration cases logged in the U.S. Although this would improve the model's understanding of underlying relationships, 
 the trade off is significant storage and performance costs that could be overcome with clustering tools such as Spark. 
 
-Finally, model currently only takes in one of 3 major areas of the law: judicial opinions (case law). To improve recall (the percent of truly relevant results returned), the model would have to include legal documents from the legislative branch (statutory laws; e.g. The Immigration and Nationality Act of 1952, or The Civil Rights Act 1964), and from the executive branch (Code of Federal Regulations -- C.F.R; rules that all federal agencies create to carry out legislative statues).  
+Finally, the model currently only takes in one of 3 major areas of the law: judicial opinions (case law). To improve recall (the percent of truly relevant results returned), the model would have to include legal documents from the legislative branch (statutory laws; e.g. The Immigration and Nationality Act of 1952, or The Civil Rights Act 1964), and from the executive branch (Code of Federal Regulations -- C.F.R; rules that all federal agencies create to carry out legislative statues).  
 
 
 
