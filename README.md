@@ -24,15 +24,12 @@ Any U.S. citizen is entitled to legal representation under the law. The same is 
 
 
 ## The problem:
+<br>
 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pie.png" height=100%  width=100%  ALIGN="left"/>
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/current_searches.png" height=100%  width=100%  ALIGN="right"/>
 
-<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pie.png" height=25%  width=25%  ALIGN="left"/>
-
-
-
-<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/current_searches.png" height=25%  width=25%  ALIGN="right"/>
-
-
+<br>
 
 
 ## Demo: 
