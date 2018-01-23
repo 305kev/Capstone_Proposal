@@ -45,6 +45,11 @@ This is where A.I. steps in. Although recent advances in machine learning have a
 </p>
 
 ## The Process: 
+
+<p align="center"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pipeline.png" width=75% height=75% />
+</p>
+
 One of the biggest hurdles to overcome is how to access all the relevant data. Using $15 per search engines like Westlaw and LexisNexis are not feasible, however convenient their aggregation of all relevant law types may be. Alternatively, it is possible to set up web-scrapers to access and store the data held piecemeal on many government websites and free legal resource sites like FindLaw. That is how I began my data collection. Using Python's Beautiful Soup module, I scraped over 6,000 cases using a cadre of AWS EC2s, and saved the results as csv files in Amazon's S3 bucket service. 
 
 Next, I indexed the cases in such a way as to make it easy to locate all the court documents where each term in the query appears. Below is an example: 
@@ -53,22 +58,18 @@ Next, I indexed the cases in such a way as to make it easy to locate all the cou
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/index.png" width=75% height=75% />
 </p>
 
-In order to get the entire set of unique terms in the corpus of court cases, I passed in the corpus through a standard Natural Language Processing "cleaning" process that involves removing punctuation, common "stop words" that do not help in differentiating between court cases, and also stemming (getting the root word for each term; ex: run, instead of running). 
+In order to get the entire set of unique terms in the corpus of court cases, I passed in each case through a standard Natural Language Processing "cleaning" process that involves removing punctuation, common "stop words" that do not help in differentiating between court cases, and also stemming (getting the root word for each term; ex: run, instead of running). 
 To enable an "apples to apples" comparison, I run the same process through the search query. Below is a simplified version of how this works in Python: 
 
 <p align="center"> 
-<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pipeline.png" width=75% height=75% />
+<img src="images/Example/nlp.png">
 </p>
+
 
 ## The Challenge: 
 
 The types of law pose a domain-knowledge challenge as well as a programmatic one. For the domain-based knowledge, I am working with several law students as well as reading up on the basic legal structures to isolate the importance of different legal document types. On the programmatic side, the task will be to classify the type of law: from case law (opinions), to statutory law (legislation), to (executive agency) regulation, etc. Next, I will implement a Natural Language Processing algorithm to parse through each type of legal document and identify similarity between text to return relevant information. Finally, I will use words associted with a positive and negative tone to score each document on a positive/negative scale to provide additional information to the user. 
 
-Below is an example in python of how NLP works: 
-
-<p align="center"> 
-<img src="images/Example/nlp.png">
-</p>
 
 
 ## Future improvements
