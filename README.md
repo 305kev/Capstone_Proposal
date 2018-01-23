@@ -56,11 +56,18 @@ This is where A.I. steps in. Although recent advances in machine learning have a
 
 One of the biggest hurdles to overcome is how to access all the relevant data. Using $15 per search engines like Westlaw and LexisNexis are not feasible, however convenient their aggregation of all relevant law types may be. Alternatively, it is possible to set up web-scrapers to access and store the data held piecemeal on many government websites and free legal resource sites like FindLaw. That is how I begin my data collection. Using Python's Beautiful Soup module, I scraped over 6,000 cases using a cadre of AWS EC2s, and saved the results as csv files in Amazon's S3 bucket service. 
 
+
+<p align="center"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/df.png" width=75% height=75% />
+ <br> Figure 6. Legal A.I. example of how cases are stored in pandas dataframes
+</p>
+
+
 Next, I indexed the cases in such a way as to make it easy to locate all the court documents where each term in the query appears. In addition, I added the position/ index where each term appears in the court document, to enable phrase searching (ex: "United States of America" or "New York Yankees"). Below is an example: 
 
 <p align="center"> 
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/index.png" width=75% height=75% />
- <br> Figure 6. Legal A.I. court case search index
+ <br> Figure 7. Legal A.I. court case search index
 </p>
 
 In order to get the entire set of unique terms in the corpus of court cases, I passed in each case through a standard Natural Language Processing "cleaning" process that involves removing punctuation, common "stop words" that do not help in differentiating between court cases, and also stemming (getting the root word for each term; ex: run, instead of running). 
