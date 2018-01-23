@@ -9,3 +9,6 @@ nltk
 autocorrect
 textblob
 signal
+genism
+nltk.download('stopwords')
+nltk.download('punkt')

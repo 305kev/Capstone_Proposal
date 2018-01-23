@@ -55,18 +55,12 @@ def process_query(web_query):
         query_split.append(spell(words))
 
     query_spell_checked = " ".join(query_split)
-
     indices = results.indexed_results(model[0], query_spell_checked)
-
-    # print(indices)
     # Step 2: Get index_vectors and case_val dictionary
     index_vectors, case_value_dictionary= results.get_index_vectors(model[2], indices)
-
     # Step 3: Vectorize query
     vectorized_query = results.query_vector(model[1], query_spell_checked)
     # Step 4: Get Cosine similarities
-
-
     cosine_similarities = results.cosine_similarity(vectorized_query, index_vectors)
     # Step 5: Get top results and rank them (top 10 right now...)
     top_results = (results.get_top_values(cosine_similarities[0], 10), query_spell_checked)
@@ -186,14 +180,21 @@ def get_relevant_info(list_of_case_indices, df, legal_query):
     # Initialize a relevant info list
     relevant_info = []
     # create instances for filling up relevant info lis
-    print(list_of_case_indices)
+
     for index in list_of_case_indices:
         results = get_most_relevant_part(index, df, legal_query, top_n=3, highlight_num=1)
         highlights = highlight_key_query_words(legal_query,results)
         matches = get_most_relevant_part(index, df, legal_query, top_n=3, highlight_num=3)
 
-        recommendations = get_graph_recommendations(df.title_date[index], graph_recommendations)
-        sentimentality = get_sentimentality_score(matches)
+        # recommendations = get_graph_recommendations(df.title_date[index], graph_recommendations)[:3]
+        # sentimentality = get_sentimentality_score(matches)
+
+        # case_dict = {}
+        #
+        # for case in recommendations:
+        #     case_index = df.index[df['title_date'] == case].tolist()[0]
+        #     case_dict['case_id'] = case_index
+        #     case_dict['case_title'] = df.case_title[case_index]
 
         index = np.asscalar(index)
         empDict = {
@@ -204,26 +205,21 @@ def get_relevant_info(list_of_case_indices, df, legal_query):
             'case_html': df.html_format[index],
             'case_matches': matches
         }
-        # 'case_sentimentality': sentimentality,
-        # 'case_recommendations': recommendations
+            # 'case_sentimentality': sentimentality,
+            # 'case_recommendations': case_dict
+
+
         """
         Sentimentality Score: 
         0 - 10 (0 is fully negative, and 10 fully positive) 
         Display in preview -- Green being positive, 
                             Red being negative. With the number. 
-
-        Recommendations: a list of 5 recommendations for each case. 
-        Display in preview -- a dropdown of similar cases
-                within research results -- a dropdown or div box 
-                with the list of "similar recommended cases"       
+      
         """
-
         relevant_info.append(empDict)
     # convert to json data
     jsonStr = json.dumps(relevant_info)
-
     return Response(jsonStr, mimetype='application/json')
-
 
 @app.route('/')
 def root():
@@ -232,15 +228,44 @@ def root():
 
 @app.route("/get_results", methods=["POST"])
 def get_results():
-
     # print (model)
     # print(type(request.form))
     imd = request.form  ## Dictionary -
     dict_results = imd.to_dict(flat=False)
+
     input_query = ''.join(list(dict_results))
     ranked_indices = process_query(input_query)
+    print(ranked_indices)
     return get_relevant_info(ranked_indices, model[3], input_query)##JSON FILE
 
+@app.route('/get_this_case_info')
+def get_recommendations():
+    """
+    :return: JSON, with recommended case info
+    """
+    df = model[3]
 
+    imd = request.form  ## Dictionary -
+    dict_results = imd.to_dict(flat=False)
+    input_case_index = list(dict_results)[0]
+
+    recommendations = get_graph_recommendations(df.title_date[input_case_index], graph_recommendations)[:3]
+    case_dict = {}
+    for case in recommendations:
+        case_index = df.index[df['title_date'] == case].tolist()[0]
+        case_dict['case_id'] = case_index
+        case_dict['case_title'] = df.case_title[case_index]
+
+    empDict = {
+        'case_id': input_case_index,
+        'case_title': df.case_title[input_case_index],
+        'case_date': df.date[input_case_index],
+        'case_html': df.html_format[input_case_index],
+        'case_recommendations': case_dict
+    }
+
+    relevant_case_info = [empDict]
+    jsonStr = json.dumps(relevant_case_info)
+    return Response(jsonStr, mimetype='application/json')
 
 
