@@ -1,7 +1,7 @@
 
 # A.I. Legal Research Assistant
 
-[__Spring 2017 Galvanize Data Science Immersive__](https://www.galvanize.com/austin)
+[__Fall 2017 Galvanize Data Science Immersive__](https://www.galvanize.com/austin)
 
 An Investigation of legal research using the court cases scraped with Python's Beautiful Soup from FindLaw.com.
 
