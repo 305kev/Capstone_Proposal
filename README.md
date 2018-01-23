@@ -3,7 +3,14 @@
 
 [__Spring 2017 Galvanize Data Science Immersive__](https://www.galvanize.com/austin)
 
+<br><br>
+An Investigation of legal research using the court cases scraped with Python's Beautiful Soup from FindLaw.com.
 
+__Abstract:__ This project uses over 5,000 U.S. Supreme Court and U.S. Circuit Courts of Appeals' immigration cases. These were scraped using Python's Beautiful Soup from FindLaw.com on Amazon AMIs and S3. 
+
+__Results:__ Built a fully functioning legal search engine able to take in free text queries and return relevant results based on cosine similarity built onTf-IDF weights. Additionally, each result has 3 related court cases based on Networkx graph recommendations. 
+
+See this work as a presentation in [Google Slides](https://docs.google.com/presentation/d/18PTXyDBYRlwHm7m53Z7BVN3Ix4OfCYLWLPpcTeVV6Is/edit?usp=sharing).
 
 [See the video](https://www.youtube.com/watch?v=o5R0kOjtzwA&index=5&list=PLxtztEze-DRfCd2LY4IRytALcjpJQp0WC) of this talk.
 
@@ -11,9 +18,7 @@
 
 Any U.S. citizen is entitled to legal representation under the law. The same is not true for non-citizens. In immigration court, over 80% of all defendants go unrepresented simply because they cannot afford a lawyer. Legal research stands among the highest costs for defendants. This is where A.I. steps in. Although recent advances in machine learning have affected most major industries, the legal market is notably absent, with a few exceptions. ROSS A.I. is a startup company that has built a search engine built to optimize legal research; however they are solely focused on bankruptcy law. With this project, I intend to build upon their work and expand this ML powered search engine to new areas like immigration law. Below is an example of how it works: 
 
-
-
-![Demo](https://github.com/305kev/Capstone_Proposal/blob/master/images/demo.gif) 
+## Demo
 
 <p align="center"> 
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/demo.gif" width="700" height="650" />
