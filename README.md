@@ -23,11 +23,23 @@ Any U.S. citizen is entitled to legal representation under the law. The same is 
 <br> Figure 1. Distribution of hourly rates for divorce attorneys, https://www.nolo.com/legal-encyclopedia/ctp/cost-of-divorce.html
 
 
+## The problem:
+
+<p align="left"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pie.png" width="400" height="300"/>
+</p>
+
+<p align="right"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/current_searches.png" width="400" height="300"/>
+</p>
+
+
+
 ## Demo: 
 This is where A.I. steps in. Although recent advances in machine learning have affected most major industries, the legal market is notably absent, with a few exceptions. ROSS A.I. is a startup company that has built a search engine built to optimize legal research; however they are solely focused on bankruptcy law. With this project, I intend to build upon their work and expand this ML powered search engine to new areas like immigration law. Below is an example of how it works: 
 
 <p align="center"> 
-<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/demo.gif" width="750" height="750" />
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/demo.gif" width="750" height="800" />
 </p>
 
 ## The Challenge: 
