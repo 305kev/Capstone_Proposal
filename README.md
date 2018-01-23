@@ -42,8 +42,9 @@ This is where A.I. steps in. Although recent advances in machine learning have a
 <br> 
 <p align="center"> 
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/demo.gif" width=75% height=75% />
-</p>
 <br> Figure 4. Legal A.I. search engine by Kevin G. Magana, a demonstation of the product
+
+</p>
 
 
 ## The Process: 
