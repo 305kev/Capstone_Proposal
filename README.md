@@ -3,7 +3,6 @@
 
 [__Spring 2017 Galvanize Data Science Immersive__](https://www.galvanize.com/austin)
 
-<br><br>
 An Investigation of legal research using the court cases scraped with Python's Beautiful Soup from FindLaw.com.
 
 __Abstract:__ This project uses over 5,000 U.S. Supreme Court and U.S. Circuit Courts of Appeals' immigration cases. These were scraped using Python's Beautiful Soup from FindLaw.com on Amazon AMIs and S3. 
