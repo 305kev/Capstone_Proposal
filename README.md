@@ -1,25 +1,53 @@
 
 # A.I. Legal Research Assistant
 
-[__Spring 2017 Galvanize Data Science Immersive__](https://www.galvanize.com/austin)
+[__Fall 2017 Galvanize Data Science Immersive__](https://www.galvanize.com/austin)
 
+An Investigation of legal research using the court cases scraped with Python's Beautiful Soup from FindLaw.com.
 
+__Abstract:__ This project uses over 5,000 U.S. Supreme Court and U.S. Circuit Courts of Appeals' immigration cases. These were scraped using Python's Beautiful Soup from FindLaw.com on Amazon AMIs and S3. 
+
+__Results:__ Built a fully functioning legal search engine able to take in free text queries and return relevant results based on cosine similarity built on Tf-IDF weights. Additionally, each result has 3 related court cases based on Networkx graph recommendations. 
+
+See this work as a presentation in [Google Slides](https://docs.google.com/presentation/d/18PTXyDBYRlwHm7m53Z7BVN3Ix4OfCYLWLPpcTeVV6Is/edit?usp=sharing).
 
 [See the video](https://www.youtube.com/watch?v=o5R0kOjtzwA&index=5&list=PLxtztEze-DRfCd2LY4IRytALcjpJQp0WC) of this talk.
 
+
 ## Motivation: 
 
-Any U.S. citizen is entitled to legal representation under the law. The same is not true for non-citizens. In immigration court, over 80% of all defendants go unrepresented simply because they cannot afford a lawyer. Legal research stands among the highest costs for defendants. This is where A.I. steps in. Although recent advances in machine learning have affected most major industries, the legal market is notably absent, with a few exceptions. ROSS A.I. is a startup company that has built a search engine built to optimize legal research; however they are solely focused on bankruptcy law. With this project, I intend to build upon their work and expand this ML powered search engine to new areas like immigration law. Below is an example of how it works: 
+Any U.S. citizen is entitled to legal representation under the law. The same is not true for non-citizens. In immigration court, over 80% of all defendants go unrepresented simply because they cannot afford a lawyer. Legal research stands among the highest costs for defendants. To illustrate, below are the national average of hourly rates for divorce attorneys: 
+
+<p align="center"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/histogram_0.png" width=75% height=75% />
+
+<br> Figure 1. Distribution of hourly rates for divorce attorneys, https://www.nolo.com/legal-encyclopedia/ctp/cost-of-divorce.html
 
 
+## The problem:
+<br>
 
-![Demo](https://media.giphy.com/media/3ohc0VEmDW6PWSCvfO/giphy.gif)
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pie.png" width="425"/><img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/current_searches.png" width="425"/>
 
-![Demo](http://i.imgur.com/wVOzU7y.gif)
+<br> Figure 2. Average time spent on legal research, http://bit.ly/1vfqzm3
+<br> Figure 3. Current legal search queries, https://lscontent.westlaw.com/images/content/WLNT&CSearching.pdf 
 
-![Demo](https://imgur.com/2KELO8j)
+<br>
 
 
+## Potential Solution (Demo): 
+This is where A.I. steps in. Although recent advances in machine learning have affected most major industries, the legal market is notably absent, with a few exceptions. ROSS A.I. is a startup company that has built a search engine built to optimize legal research; however they are solely focused on bankruptcy law. With this project, I intend to build upon their work and expand this ML powered search engine to new areas like immigration law. Below is an example of how it works: 
+
+<p align="center"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/demo.gif" width=75% height=75% />
+</p>
+
+## The Process: 
+
+
+<p align="center"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pipeline.png" width=75% height=75% />
+</p>
 
 ## The Challenge: 
 
@@ -44,34 +72,19 @@ The types of law pose a domain-knowledge challenge as well as a programmatic one
 
 Below is an example in python of how NLP works: 
 
-
 <p align="center"> 
 <img src="images/Example/nlp.png">
 </p>
 
 
-## Research Questions: 
-- What is the time-saving potential for an Machine Learning powered-optimized search engine? 
-- What additional measurements can be helpful to a user doing legal research? 
-- What parameters are important to each document type? 
-- Which measures of similarity will yield optimal results? 
+## Future improvements
+An ideal A.I.-powered legal search engine would be able optimize the scoring function, taking in inputs from 3 broad categories: (1) The Query (from a database of queries, as part of query understanding), (2) The data (using a variety of networkx graphs to measure importance of documents, independent of the query), and (3) user ratings (of whether or not expert users found the search result relevant). A future model could leverage user ratings as labeled data to train, 
+and improve performance on. 
 
-## The Data: 
+Additionally, one major drawback to my analysis is that it's based on cases scraped going back about 25 years, which highly biases results that are more recent. Future work could focus on acquiring a larger amount of data, as there over 200,000 immigration cases logged in the U.S. Although this would improve the model's understanding of underlying relationships, 
+the trade off is significant storage and performance costs that could be overcome with clustering tools such as Spark. 
 
-One challenge with NLP in "tokenizing" words is to not get rid of important legal terms. Luckily, I have located and stored in the data folder a collection of legal dictionaries to avoid overlooking important terms. 
-
-Another challenge is scraping up the data on the scattered websites. One site, FindLaw, has a particularly tricky URL schema that potentially holds billions of combinations. So I will have to setup an effective Scrappy Spider to locate all active URL pages and scrape those I need to create the necessary database. 
-
-## Next Steps: 
-
-- Set up a Scrapy.Spider to scrape the web for all relevant types of law 
-- Store the data in a MongoDB / AWS 
-- Clean the data to isolate the strings of legal text
-- Tokenize the text according to relevant parameters for that type of legal document 
-- Normalize the words to prepare for processing 
-- Build a webapp for visualization and the ease-of-use of the search engine
-- Tools: Python (BeautifulSoup, Numpy, Scikit-Learn, Pandas, nltk), MongoDB, PostgresSQL, Javascript (jQuery), Amazon EC2
-
+Finally, model currently only takes in one of 3 major areas of the law: judicial opinions (case law). To improve recall (the percent of truly relevant results returned), the model would have to include legal documents from the legislative branch (statutory laws; e.g. The Immigration and Nationality Act of 1952, or The Civil Rights Act 1964), and from the executive branch (Code of Federal Regulations -- C.F.R; rules that all federal agencies create to carry out legislative statues).  
 
 
 
