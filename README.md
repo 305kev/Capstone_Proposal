@@ -7,7 +7,7 @@ An Investigation of legal research using the court cases scraped with Python's B
 
 __Abstract:__ This project uses over 5,000 U.S. Supreme Court and U.S. Circuit Courts of Appeals' immigration cases. These were scraped using Python's Beautiful Soup from FindLaw.com on Amazon AMIs and S3. 
 
-__Results:__ Built a fully functioning legal search engine able to take in free text queries and return relevant results based on cosine similarity built onTf-IDF weights. Additionally, each result has 3 related court cases based on Networkx graph recommendations. 
+__Results:__ Built a fully functioning legal search engine able to take in free text queries and return relevant results based on cosine similarity built on Tf-IDF weights. Additionally, each result has 3 related court cases based on Networkx graph recommendations. 
 
 See this work as a presentation in [Google Slides](https://docs.google.com/presentation/d/18PTXyDBYRlwHm7m53Z7BVN3Ix4OfCYLWLPpcTeVV6Is/edit?usp=sharing).
 
@@ -19,7 +19,7 @@ Any U.S. citizen is entitled to legal representation under the law. The same is 
 
 
 <p align="center"> 
-<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/histogram_0.png"/>
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/histogram_0.png" width="500" height="500"/>
 </p>
 
 
