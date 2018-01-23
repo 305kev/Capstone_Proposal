@@ -19,7 +19,7 @@ Any U.S. citizen is entitled to legal representation under the law. The same is 
 
 
 <p align="center"> 
-<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/histogram_0.png" width="500" height="500"/>
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/histogram_0.png" width="650" height="500"/>
 </p>
 
 
