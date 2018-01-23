@@ -18,7 +18,7 @@ See this work as a presentation in [Google Slides](https://docs.google.com/prese
 Any U.S. citizen is entitled to legal representation under the law. The same is not true for non-citizens. In immigration court, over 80% of all defendants go unrepresented simply because they cannot afford a lawyer. Legal research stands among the highest costs for defendants. To illustrate, below are the national average of hourly rates for divorce attorneys: 
 
 <p align="center"> 
-<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/histogram_0.png" width="650" height="500"/>
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/histogram_0.png" width=75% height=75% />
 
 <br> Figure 1. Distribution of hourly rates for divorce attorneys, https://www.nolo.com/legal-encyclopedia/ctp/cost-of-divorce.html
 
