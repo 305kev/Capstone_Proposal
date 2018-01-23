@@ -39,6 +39,12 @@ This is where A.I. steps in. Although recent advances in machine learning have a
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/demo.gif" width=75% height=75% />
 </p>
 
+## The Process: 
+
+<p align="center"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pipeline.png" width=75% height=75% />
+</p>
+
 ## The Challenge: 
 
 One of the biggest hurdles to overcome is how to access all the relevant data. Using $15 per search engines like Westlaw and LexisNexis are not feasible, however convenient their aggregation of all relevant law types may be. Alternatively, it is possible to set up web-scrapers to access and store the data held piecemeal on many government websites and free legal resource sites like FindLaw.
