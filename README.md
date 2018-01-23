@@ -1,7 +1,7 @@
 
 # A.I. Legal Research Assistant
 
-### Kevin Magana, December 17th, 2017 
+### Kevin Magana
 
 ## Motivation: 
 
