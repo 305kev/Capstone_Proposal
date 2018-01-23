@@ -54,7 +54,7 @@ This is where A.I. steps in. Although recent advances in machine learning have a
 </p>
 
 
-One of the biggest hurdles to overcome is how to access all the relevant data. Using $15 per search engines like Westlaw and LexisNexis are not feasible, however convenient their aggregation of all relevant law types may be. Alternatively, it is possible to set up web-scrapers to access and store the data held piecemeal on many government websites and free legal resource sites like FindLaw. That is how I begin my data collection. Using Python's Beautiful Soup module, I scraped over 6,000 cases using a cadre of AWS EC2s, and saved the results as csv files in Amazon's S3 bucket service. 
+One of the biggest hurdles to overcome is how to access all the relevant data. Using $15 per search engines like Westlaw and LexisNexis are not feasible, however convenient their aggregation of all relevant law types may be. Alternatively, it is possible to set up web-scrapers to access and store the data held piecemeal on many government websites and free legal resource sites like FindLaw. That is how I begin my data collection. Using Python's Beautiful Soup module, I scraped over 6,000 cases using a cadre of AWS EC2s, and saved the results as csv files in Amazon's S3 bucket service. Below is an example of how I stored the scraped court case data: 
 
 
 <p align="center"> 
@@ -77,8 +77,23 @@ After the data had been fulled indexed, (1) I was able to get the user query and
 
 ## The Challenge: 
 
-The types of law pose a domain-knowledge challenge as well as a programmatic one. For the domain-based knowledge, I am working with several law students as well as reading up on the basic legal structures to isolate the importance of different legal document types. On the programmatic side, the task will be to classify the type of law: from case law (opinions), to statutory law (legislation), to (executive agency) regulation, etc. Next, I will implement a Natural Language Processing algorithm to parse through each type of legal document and identify similarity between text to return relevant information. Finally, I will use words associted with a positive and negative tone to score each document on a positive/negative scale to provide additional information to the user. 
+The types of law pose a domain-knowledge challenge as well as a programmatic one. For the domain-based knowledge, I am working with several law students as well as reading up on the basic legal structures to isolate the importance of different legal document types. 
 
+On the programmatic side, one of the biggest issues I had to resolve was how to pick up court case citations. An example of a citation looks like this: "Pilch v. Ashcroft, 353 F.3d 585 (7th Cir.2003)." I am indebted to the folks working on the Free Law Project's Court Listener project for providing the citation parser necessary to pick these citations up (https://www.courtlistener.com/). 
+
+What I was able to do with these citations is apply graph theory through the Python Networkx graph module to discover communities of court cases based on the number of shared citations. Below I include a few examples of how this works: 
+
+<p align="center"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/discover_communities.png" width=75% height=75% />
+ <br> Figure 8. Legal A.I. discovering communities networkx graph
+</p>
+
+By adjusting the network graph to only include nodes of court cases and the edges that connects them as the number of citations they share, I was able to discover new communities of court cases. These new communities allowed me to return a list of 3 to 5 of the most related cases by the number of shared citations for each search result. This allows the user to continue looking at similar cases, should they find that search result to be relevant. 
+
+<p align="center"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/graph_with_weights.png" width=75% height=75% />
+ <br> Figure 9. Legal A.I. Networkx Graph Recommender: discovering communities with weighted edges
+</p>
 
 
 ## Future improvements
