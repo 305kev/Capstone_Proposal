@@ -54,7 +54,7 @@ One of the biggest hurdles to overcome is how to access all the relevant data. U
 
 Next, I indexed the cases in such a way as to make it easy to locate all the court documents where each term in the query appears. Below is an example: 
 
-<p align="left"> 
+<p align="center"> 
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/index.png" width=75% height=75% />
 </p>
 
