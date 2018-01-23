@@ -19,19 +19,19 @@ Any U.S. citizen is entitled to legal representation under the law. The same is 
 
 <p align="center"> 
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/histogram_0.png" width="650" height="500"/>
-</p>
+
 <br> Figure 1. Distribution of hourly rates for divorce attorneys, https://www.nolo.com/legal-encyclopedia/ctp/cost-of-divorce.html
 
 
 ## The problem:
 
-<p align="left"> 
-<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pie.png" width="400" height="300"/>
-</p>
 
-<p align="right"> 
-<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/current_searches.png" width="400" height="300"/>
-</p>
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/pie.png" height=25%  width=25%  ALIGN="left"/>
+
+
+
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/current_searches.png" height=25%  width=25%  ALIGN="right"/>
+
 
 
 
