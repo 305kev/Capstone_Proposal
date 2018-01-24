@@ -37,7 +37,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 model = results.load_model(first_time = False) ## loaded_parser, vectorizer_obj, tf_idf_vectors, df
 
 try:
-    with open("/Users/kevingmagana/DSI/capstone/fitted_graph_model.pkl", "rb") as f:
+    with open("/Users/rmathur101/Desktop/WORKING_ON/PROJECTS/LEGAL_AI/fitted_graph_model.pkl", "rb") as f:
         graph_recommendations = cPickle.load(f)
 except:
     with open("/home/ec2-user/github/fitted_graph.pkl", "rb") as f:
@@ -178,6 +178,54 @@ def get_graph_recommendations(title, fitted_graph):
     commuity_nodes = fitted_graph.check[community_value]
     return fitted_graph.get_recommendations(search_query, commuity_nodes)
 
+# def get_relevant_info(list_of_case_indices, df, legal_query):
+#     """
+#     :param list_of_case_indices: list of all ranked case indices.
+#     :param df: dataframe, of all the court cases
+#     :param legal_query: string, a question
+#     :return: json,
+#     """
+#     # Initialize a relevant info list
+#     relevant_info = []
+#     # create instances for filling up relevant info lis
+#     print(list_of_case_indices)
+#     for index in list_of_case_indices:
+#         results = get_most_relevant_part(index, df, legal_query, top_n=3, highlight_num=1)
+#         highlights = highlight_key_query_words(legal_query,results)
+#         matches = get_most_relevant_part(index, df, legal_query, top_n=3, highlight_num=3)
+
+#         recommendations = get_graph_recommendations(df.title_date[index], graph_recommendations)
+#         sentimentality = get_sentimentality_score(matches)
+
+#         index = np.asscalar(index)
+#         empDict = {
+#             'case_id': index,
+#             'case_title': df.case_title[index],
+#             'case_date': df.date[index],
+#             'case_text': highlights,
+#             'case_html': df.html_format[index],
+#             'case_matches': matches
+#         }
+#         # 'case_sentimentality': sentimentality,
+#         # 'case_recommendations': recommendations
+#         """
+#         Sentimentality Score:
+#         0 - 10 (0 is fully negative, and 10 fully positive)
+#         Display in preview -- Green being positive,
+#                             Red being negative. With the number.
+
+#         Recommendations: a list of 5 recommendations for each case.
+#         Display in preview -- a dropdown of similar cases
+#                 within research results -- a dropdown or div box
+#                 with the list of "similar recommended cases"
+#         """
+
+#         relevant_info.append(empDict)
+#     # convert to json data
+#     jsonStr = json.dumps(relevant_info)
+
+#     return Response(jsonStr, mimetype='application/json')
+
 def get_relevant_info(list_of_case_indices, df, legal_query):
     """
     :param list_of_case_indices: list of all ranked case indices.
@@ -188,14 +236,21 @@ def get_relevant_info(list_of_case_indices, df, legal_query):
     # Initialize a relevant info list
     relevant_info = []
     # create instances for filling up relevant info lis
-    print(list_of_case_indices)
+
     for index in list_of_case_indices:
         results = get_most_relevant_part(index, df, legal_query, top_n=3, highlight_num=1)
         highlights = highlight_key_query_words(legal_query,results)
         matches = get_most_relevant_part(index, df, legal_query, top_n=3, highlight_num=3)
 
-        recommendations = get_graph_recommendations(df.title_date[index], graph_recommendations)
+        # recommendations = get_graph_recommendations(df.title_date[index], graph_recommendations)[:3]
         sentimentality = get_sentimentality_score(matches)
+
+        case_dict = {}
+
+        # for case in recommendations:
+        #     case_index = df.index[df['title_date'] == case].tolist()[0]
+        #     case_dict['case_id'] = case_index
+        #     case_dict['case_title'] = df.case_title[case_index]
 
         index = np.asscalar(index)
         empDict = {
@@ -204,33 +259,26 @@ def get_relevant_info(list_of_case_indices, df, legal_query):
             'case_date': df.date[index],
             'case_text': highlights,
             'case_html': df.html_format[index],
-            'case_matches': matches
+            'case_matches': matches,
+            # 'case_recommendations': case_dict
+            'case_sentimentality': sentimentality,
         }
-        # 'case_sentimentality': sentimentality,
-        # 'case_recommendations': recommendations
+
         """
         Sentimentality Score:
         0 - 10 (0 is fully negative, and 10 fully positive)
         Display in preview -- Green being positive,
                             Red being negative. With the number.
 
-        Recommendations: a list of 5 recommendations for each case.
-        Display in preview -- a dropdown of similar cases
-                within research results -- a dropdown or div box
-                with the list of "similar recommended cases"
         """
-
         relevant_info.append(empDict)
     # convert to json data
     jsonStr = json.dumps(relevant_info)
-
     return Response(jsonStr, mimetype='application/json')
-
 
 @app.route('/')
 def root():
     return render_template("index.html")
-
 
 @app.route("/get_results", methods=["POST"])
 def get_results():

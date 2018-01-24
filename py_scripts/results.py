@@ -178,7 +178,9 @@ def load_data(local= True):
     """
     if local:
         # -- LOAD FROM LOCAL MACHINE --
-        df = pd.read_csv('/Users/kevingmagana/DSI/capstone/case_corpus.csv')
+        # df = pd.read_csv('/Users/kevingmagana/DSI/capstone/case_corpus.csv')
+        df = pd.read_csv('/Users/rmathur101/Desktop/WORKING_ON/PROJECTS/LEGAL_AI/case_corpus.csv')
+        # "/Users/rmathur101/anaconda3/lib/python3.5/runpy.py"
         df = df.dropna()
         df['title_date'] = df[['case_title', 'date']].apply(lambda x: ' '.join(x), axis=1)
 
@@ -211,17 +213,17 @@ def load_model(first_time = True):
         data = df2.case_text
     else:
         try:
-            df= pd.read_csv('/Users/kevingmagana/DSI/capstone/case_corpus.csv')
+            df= pd.read_csv('/Users/rmathur101/Desktop/WORKING_ON/PROJECTS/LEGAL_AI/case_corpus.csv')
             data = df.case_text
         except:
-            df = pd.read_csv('/home/ec2-user/github/dataset.csv')
+            df= pd.read_csv('/Users/rmathur101/Desktop/WORKING_ON/PROJECTS/LEGAL_AI/case_corpus.csv')
             data = df.case_text
     # Step 3: Load fitted query parser
     try:
-        FILE_PATH = "/Users/kevingmagana/DSI/capstone/fitted_query_parser_updated4.pkl"
+        FILE_PATH = "/Users/rmathur101/Desktop/WORKING_ON/PROJECTS/LEGAL_AI/fitted_query_parser_updated4.pkl"
         loaded_parser = load_fitted_query_parser(FILE_PATH)
     except:
-        FILE_PATH = "/home/ec2-user/github/fitted_query_parser3.pkl"
+        FILE_PATH = "/Users/rmathur101/Desktop/WORKING_ON/PROJECTS/LEGAL_AI/fitted_query_parser_updated4.pkl"
         loaded_parser = load_fitted_query_parser(FILE_PATH)
 
     # Step 5: Vectorize corpus
@@ -281,13 +283,14 @@ if __name__ == "__main__":
         # stemmed_words = stem_words(removed_stop_words)
 
         # Step 3: Load fitted query parser
-        FILE_PATH = "/Users/kevingmagana/DSI/capstone/fitted_query_parser_updated4.pkl"
+        # FILE_PATH = "/Users/kevingmagana/DSI/capstone/fitted_query_parser_updated4.pkl"
+        FILE_PATH = "/Users/rmathur101/Desktop/WORKING_ON/PROJECTS/LEGAL_AI/fitted_query_parser_updated4.pkl"
         loaded_parser = load_fitted_query_parser(FILE_PATH)
 
         # Step 4: Find matched cases with query terms
         indices = indexed_results(loaded_parser, query)
-        """ EX: 
-            {1132: 'Peralta-Taveras v. Gonzales 06/06/2007', 
+        """ EX:
+            {1132: 'Peralta-Taveras v. Gonzales 06/06/2007',
             4457: 'Moncrieffe v. Holder 04/23/2013', ... """
 
         # Step 5: Vectorize corpus and query

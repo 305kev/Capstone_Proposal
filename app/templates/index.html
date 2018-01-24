@@ -72,16 +72,39 @@
 					var case_matches = thisCase.case_matches;
 					var case_html = thisCase.case_html.trim();
 
+					if (thisCase.case_sentimentality > 5) {
+						var div = `<div style="background-color: green; color: white; width: 150px; height: 25px; text-align: center; font-weight: bold; font-size: 20; border-radius: 10px;">
+							POSITIVE: ${parseInt(thisCase.case_sentimentality)}
+						</div>`;
+					} else {
+						var div = `<div style="background-color: red; color: white; width: 150px; height: 25px; text-align: center; font-weight: bold; font-size: 20; border-radius: 10px;">
+							NEGATIVE: ${parseInt(thisCase.case_sentimentality)}
+						</div>`;
+					}
+
+					$("#sentiment").html(div)
+
 					if (case_matches) {
 						console.log(case_matches);
 
+						var first =	true;
 						for (var m in thisCase.case_matches) {
+
 							var match = thisCase.case_matches[m];
 							var index = case_html.indexOf(match);
 							var length = match.length;
 
-							var contentA = "<span style='background-color: yellow; font-weight: bold; border: 1px solid black;'>";
+							// if (first) {
+							// 	var contentA = "<span id='test' style='background-color: yellow; font-weight: bold; border: 1px solid black;'>";
+							// 	var contentB = "</span>";
+							// } else {
+							// 	var contentA = "<span style='background-color: yellow; font-weight: bold; border: 1px solid black;'>";
+							// 	var contentB = "</span>";
+							// }
+
+							var contentA = "<span class='case-highlight' style='background-color: yellow; font-weight: bold; border: 1px solid black;'>";
 							var contentB = "</span>";
+
 
 							case_html = [
 								case_html.slice(0, index),
@@ -91,11 +114,17 @@
 								case_html.slice(index + length)
 							].join("");
 
+							first = false;
 						}
 
 					}
 					$("#full-case").html(case_html);
 
+					$(".case-highlight").each(function() {
+						if ($(this).text().length > 1) {
+							$(this)[0].scrollIntoView();
+						}
+					})
 				});
 
 			}
@@ -137,6 +166,11 @@
 					<button id="search-btn" class="btn-primary" style="width: 200px; height: 50px; font-weight: bold; letter-spacing: 5;">SEARCH</button>
 				</div>
 			</div>
+		</div>
+
+		<br/><br/>
+
+		<div id="sentiment" style="display: flex; justify-content: center;">
 		</div>
 
 		<br/><br/>
