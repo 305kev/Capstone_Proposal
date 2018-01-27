@@ -20,9 +20,8 @@ Any U.S. citizen is entitled to legal representation under the law. The same is 
 
 <p align="center"> 
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/histogram_0.png" width=75% height=75% />
-
 <br> Figure 1. Distribution of hourly rates for divorce attorneys, https://www.nolo.com/legal-encyclopedia/ctp/cost-of-divorce.html
-
+</p>
 
 ## The Problem:
 One of the big problems in the legal industry is the amount of time lawyers spend on legal research. It is not uncommon for lawyers to spend up to 25% or even 50% of their time engaged in this activity, as shown by the pie chart on the left. [fig 2]. Another issue highlighted by the chart on the right is the complexity of the query search terms necessary to achieve relevant results.[fig 3] The question is, can a system be built to achieve high precision (the portion of truly relevant results that are shown) and high recall (the portion of all truly relevant) results? 
