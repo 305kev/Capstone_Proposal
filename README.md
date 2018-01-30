@@ -94,6 +94,12 @@ By adjusting the network graph to only include nodes of court cases and the edge
  <br> Figure 9. Legal A.I. Networkx Graph Recommender: discovering communities with weighted edges
 </p>
 
+## Further Exploring the Data 
+<p align="center"> 
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/explore_data.png" width=75% height=75% />
+ <br> Figure 10. Legal A.I. Exploring Immigration Data (Live Dashboard coming soon...) 
+</p>
+
 
 ## Future improvements
 An ideal A.I.-powered legal search engine would be able to optimize the scoring function, taking in inputs from 3 broad categories: (1) The Query (from a database of queries, as part of query understanding), (2) The data (using a variety of networkx graphs to measure importance of documents, independent of the query), and (3) user ratings (of whether or not expert users found the search result relevant). A future model could leverage user ratings as labeled data to train, 
