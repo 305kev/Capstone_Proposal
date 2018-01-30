@@ -99,7 +99,7 @@ Below is a Tableau-based exploration of the immigration case data (at the U.S. S
 
 <p align="center"> 
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/explore_data.png" width=95% height=95% />
- <br> Figure 10. Legal A.I. Exploring Immigration Data (Live Dashboard coming soon...) 
+ <br> Figure 10. Legal A.I. Exploring Immigration Data (Live: http://tabsoft.co/2nuPylI) 
 </p>
 
 
