@@ -90,7 +90,7 @@ What I was able to do with these citations is apply graph theory through the Pyt
 By adjusting the network graph to only include nodes of court cases and the edges that connects them as the number of citations they share, I was able to discover new communities of court cases. These new communities allowed me to return a list of 3 to 5 of the most related cases by the number of shared citations for each search result. This allows the user to continue looking at similar cases, should they find that search result to be relevant. 
 
 <p align="center"> 
-<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/graph_with_weights.png" width=75% height=75% />
+<img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/graph_with_weights.png" width=95% height=95% />
  <br> Figure 9. Legal A.I. Networkx Graph Recommender: discovering communities with weighted edges
 </p>
 
