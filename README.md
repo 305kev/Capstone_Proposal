@@ -95,7 +95,7 @@ By adjusting the network graph to only include nodes of court cases and the edge
 </p>
 
 ## Further Exploring the Data 
-Below is some further exploration of the immigration case data (at the U.S. Supreme and U.S. Circuit Court of Appeals level) by constrasting the sentimentality scores of the cases themselves. Green means positive, and red is negative on the bottom horizontal bar chart.  
+Below is a Tableau-based exploration of the immigration case data (at the U.S. Supreme and U.S. Circuit Court of Appeals level) by constrasting the sentimentality scores of the cases by year.
 
 <p align="center"> 
 <img src="https://github.com/305kev/Capstone_Proposal/blob/master/images/explore_data.png" width=95% height=95% />
