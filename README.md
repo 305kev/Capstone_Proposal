@@ -112,5 +112,3 @@ the trade off is significant storage and performance costs that could be overcom
 
 Finally, the model currently only takes in one of 3 major areas of the law: judicial opinions (case law). To improve recall (the percent of truly relevant results returned), the model would have to include legal documents from the legislative branch (statutory laws; e.g. The Immigration and Nationality Act of 1952, or The Civil Rights Act 1964), and from the executive branch (Code of Federal Regulations -- C.F.R; rules that all federal agencies create to carry out legislative statues).  
 
-
-
